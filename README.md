@@ -18,6 +18,7 @@ open PR(s) for the current build phase and status.
 2. Import the schema: `mysql -u root your_db < database/schema.sql`
 3. Seed initial data (default admin, settings, homepage content):
    `mysql -u root your_db < database/seeders/seed.sql`
+   `mysql -u root your_db < database/seeders/seed_pages.sql`
 4. Point your web server's document root at `public/`, or for local dev:
    `php -S localhost:8000 -t public`
 5. Default admin login: `admin@clicknet.test` / `ChangeMe!123` — change this

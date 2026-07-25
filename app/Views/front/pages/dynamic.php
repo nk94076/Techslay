@@ -6,6 +6,7 @@
 /** @var array $industries */
 /** @var array $testimonials */
 /** @var array $faqs */
+/** @var array $caseStudies */
 
 use App\Core\View;
 
@@ -20,5 +21,6 @@ foreach ($sections as $section):
         'industries' => $industries,
         'testimonials' => $testimonials,
         'faqs' => $faqs,
+        'caseStudies' => $caseStudies,
     ]);
 endforeach;

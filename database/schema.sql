@@ -420,6 +420,7 @@ CREATE TABLE case_studies (
     metrics JSON DEFAULT NULL COMMENT 'e.g. [{"label":"Conversions","value":"+160%"}]',
     sort_order INT NOT NULL DEFAULT 0,
     status ENUM('published','draft','trashed') NOT NULL DEFAULT 'draft',
+    published_at DATETIME DEFAULT NULL,
     deleted_at DATETIME DEFAULT NULL,
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,

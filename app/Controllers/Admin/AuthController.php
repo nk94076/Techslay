@@ -105,9 +105,20 @@ final class AuthController extends Controller
         // Always show a generic success message — never reveal whether the email exists.
         if ($user !== null) {
             $token = PasswordReset::createToken($email);
-            $resetUrl = View::url('admin/reset-password/' . $token);
-            // TODO(Phase 2): dispatch via the SMTP-configured mailer instead of logging.
-            Logger::info('Password reset requested', ['email' => $email, 'reset_url' => $resetUrl]);
+            // TODO: dispatch via the SMTP-configured mailer instead of logging.
+            // The raw token/URL must never reach production logs (it's a live
+            // credential for the next hour) — only surface it when APP_DEBUG
+            // is on, for local testing.
+            $appConfig = require dirname(__DIR__, 3) . '/config/app.php';
+
+            if ($appConfig['debug']) {
+                Logger::info('Password reset requested (debug only)', [
+                    'email' => $email,
+                    'reset_url' => View::url('admin/reset-password/' . $token),
+                ]);
+            } else {
+                Logger::info('Password reset requested', ['email' => $email]);
+            }
         }
 
         Session::flash('success', 'If an account exists for that email, a reset link has been sent.');

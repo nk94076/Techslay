@@ -27,8 +27,8 @@ final class PageSectionController extends Controller
 
         $decoded = json_decode($contentRaw, true);
 
-        if ($componentType === '' || json_last_error() !== JSON_ERROR_NONE || !is_array($decoded)) {
-            Session::flash('error', 'Section type is required and content must be valid JSON.');
+        if (!$this->isValidComponentType($componentType) || json_last_error() !== JSON_ERROR_NONE || !is_array($decoded)) {
+            Session::flash('error', 'Section type must be lowercase letters, numbers and underscores, and content must be valid JSON.');
             $this->redirect('admin/pages/' . $pageId . '/edit');
 
             return;
@@ -57,8 +57,8 @@ final class PageSectionController extends Controller
 
         $decoded = json_decode($contentRaw, true);
 
-        if ($componentType === '' || json_last_error() !== JSON_ERROR_NONE || !is_array($decoded)) {
-            Session::flash('error', 'Section type is required and content must be valid JSON.');
+        if (!$this->isValidComponentType($componentType) || json_last_error() !== JSON_ERROR_NONE || !is_array($decoded)) {
+            Session::flash('error', 'Section type must be lowercase letters, numbers and underscores, and content must be valid JSON.');
             $this->redirect('admin/pages/' . $pageId . '/edit');
 
             return;
@@ -108,5 +108,17 @@ final class PageSectionController extends Controller
         PageSection::reorder((array) ($this->input('order', []) ?? []));
 
         $this->json(['success' => true]);
+    }
+
+    /**
+     * component_type is used to resolve a view partial path (front.home._{type}),
+     * so it's restricted to a safe character set rather than relying on
+     * View::resolvePath()'s incidental dot-to-slash handling to contain it.
+     * New/custom types beyond KNOWN_TYPES are still allowed — this only
+     * rejects unsafe characters, not unfamiliar names.
+     */
+    private function isValidComponentType(string $componentType): bool
+    {
+        return $componentType !== '' && preg_match('/^[a-z0-9_]+$/', $componentType) === 1;
     }
 }

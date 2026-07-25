@@ -31,7 +31,7 @@ use App\Core\View;
             </div>
           </div>
           <div class="flex items-center gap-3 text-xs">
-            <button type="button" onclick="editItem(<?= (int) $item['id'] ?>, '<?= View::e(addslashes($item['label'])) ?>', '<?= View::e(addslashes($item['url'])) ?>', '<?= $item['target'] ?>', '<?= $item['status'] ?>')" class="text-brand-600 hover:underline">Edit</button>
+            <button type="button" onclick="editItem(<?= (int) $item['id'] ?>, '<?= View::e(addslashes($item['label'])) ?>', '<?= View::e(addslashes($item['url'])) ?>', '<?= View::e($item['target']) ?>', '<?= View::e($item['status']) ?>')" class="text-brand-600 hover:underline">Edit</button>
             <form action="<?= View::url('admin/menus/items/' . $item['id'] . '/delete') ?>" method="POST" onsubmit="return confirm('Delete this menu item?');">
               <?= View::csrfField() ?>
               <input type="hidden" name="menu_id" value="<?= (int) $activeMenuId ?>">

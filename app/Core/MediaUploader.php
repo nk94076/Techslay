@@ -133,9 +133,14 @@ final class MediaUploader
     }
 
     /**
-     * Strips <script> tags and on*= event-handler attributes before saving.
-     * This is defense-in-depth, not a full sanitizer — SVGs are only
-     * accepted from authenticated admin users.
+     * Strips <script> tags, on*= event handlers (quoted or unquoted), and
+     * javascript: URIs from href/xlink:href before saving. This is
+     * defense-in-depth, not a full sanitizer (SMIL <animate> handlers and
+     * <foreignObject> content aren't covered) — SVGs are only accepted from
+     * authenticated admin users, and the app always renders them via <img>,
+     * which never executes embedded scripts. Still worth tightening since a
+     * lower-privileged admin (media.manage only) could otherwise plant a
+     * payload a higher-privileged admin might open directly.
      */
     private static function storeSvg(string $tmpPath, string $destination): void
     {
@@ -143,6 +148,8 @@ final class MediaUploader
         $contents = preg_replace('#<script\b[^>]*>.*?</script>#is', '', $contents) ?? $contents;
         $contents = preg_replace('/\son\w+\s*=\s*"[^"]*"/i', '', $contents) ?? $contents;
         $contents = preg_replace("/\son\w+\s*=\s*'[^']*'/i", '', $contents) ?? $contents;
+        $contents = preg_replace('/\son\w+\s*=\s*[^\s">]+/i', '', $contents) ?? $contents;
+        $contents = preg_replace('/((?:xlink:)?href\s*=\s*)(["\'])\s*javascript:[^"\']*\2/i', '$1$2$2', $contents) ?? $contents;
 
         file_put_contents($destination, $contents);
     }

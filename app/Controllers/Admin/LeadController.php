@@ -75,12 +75,36 @@ final class LeadController extends Controller
 
         foreach ($leads as $lead) {
             fputcsv($out, [
-                $lead['id'], $lead['name'], $lead['email'], $lead['phone'], $lead['company'],
-                $lead['lead_type'], $lead['message'], $lead['status'], $lead['created_at'],
+                $lead['id'],
+                self::sanitizeCsvCell($lead['name']),
+                self::sanitizeCsvCell($lead['email']),
+                self::sanitizeCsvCell($lead['phone']),
+                self::sanitizeCsvCell($lead['company']),
+                $lead['lead_type'],
+                self::sanitizeCsvCell($lead['message']),
+                $lead['status'],
+                $lead['created_at'],
             ], ',', '"', '\\');
         }
 
         fclose($out);
+    }
+
+    /**
+     * Every field here comes from the public, unauthenticated contact form —
+     * prefix any value that a spreadsheet app would interpret as a formula
+     * (=, +, -, @, or a leading tab/CR) with a single quote so opening the
+     * export can't execute attacker-supplied formulas ("CSV injection").
+     */
+    private static function sanitizeCsvCell(?string $value): string
+    {
+        $value = (string) $value;
+
+        if ($value !== '' && str_contains("=+-@\t\r", $value[0])) {
+            return "'" . $value;
+        }
+
+        return $value;
     }
 
     public function delete(int $id): void

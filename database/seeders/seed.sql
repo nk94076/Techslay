@@ -24,6 +24,7 @@ INSERT INTO permissions (name, slug, `group`) VALUES
 ('Manage Case Studies', 'case_studies.manage', 'content'),
 ('Manage Testimonials', 'testimonials.manage', 'content'),
 ('Manage FAQs', 'faqs.manage', 'content'),
+('Manage Statistics', 'statistics.manage', 'content'),
 ('Manage Leads', 'leads.manage', 'leads'),
 ('Manage Settings', 'settings.manage', 'settings'),
 ('Manage SEO', 'seo.manage', 'seo');

@@ -19,9 +19,11 @@ $navItems = [
     ['label' => 'Case Studies', 'url' => 'admin/case-studies', 'icon' => '&#128202;'],
     ['label' => 'Testimonials', 'url' => 'admin/testimonials', 'icon' => '&#128172;'],
     ['label' => 'FAQs', 'url' => 'admin/faqs', 'icon' => '&#10067;'],
+    ['label' => 'Statistics', 'url' => 'admin/statistics', 'icon' => '&#128200;'],
     ['label' => 'Leads', 'url' => 'admin/leads', 'icon' => '&#128231;'],
     ['label' => 'SEO', 'url' => 'admin/seo', 'icon' => '&#128269;'],
-    ['label' => 'Users & Roles', 'url' => 'admin/users', 'icon' => '&#128100;'],
+    ['label' => 'Users', 'url' => 'admin/users', 'icon' => '&#128100;'],
+    ['label' => 'Roles', 'url' => 'admin/roles', 'icon' => '&#128274;'],
     ['label' => 'Settings', 'url' => 'admin/settings', 'icon' => '&#9881;'],
 ];
 

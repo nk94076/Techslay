@@ -8,7 +8,7 @@ return [
     'debug' => (bool) env('APP_DEBUG', false),
     'url' => rtrim((string) env('APP_URL', 'http://localhost'), '/'),
     'key' => env('APP_KEY', ''),
-    'timezone' => 'Asia/Kolkata',
+    'timezone' => 'UTC',
 
     'upload_max_size' => ((int) env('UPLOAD_MAX_SIZE_MB', 10)) * 1024 * 1024,
     'upload_allowed_images' => ['jpg', 'jpeg', 'png', 'webp', 'gif', 'svg'],

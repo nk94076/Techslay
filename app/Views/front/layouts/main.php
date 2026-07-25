@@ -11,7 +11,7 @@ use App\Core\Seo;
 use App\Core\View;
 use App\Models\Setting;
 
-$siteName = Setting::get('branding', 'site_name', 'ClickNet');
+$siteName = Setting::get('branding', 'site_name', 'Techslay');
 $seo = $seo ?? [];
 
 $resolvedTitle = $seo['title'] ?? ($pageTitle ?? '');
@@ -35,6 +35,9 @@ $twitterCard = $seo['twitter_card'] ?? 'summary_large_image';
 <?php if ($seo['keywords'] ?? ''): ?><meta name="keywords" content="<?= View::e($seo['keywords']) ?>"><?php endif; ?>
 <meta name="robots" content="<?= View::e($robotsIndex . ', ' . $robotsFollow) ?>">
 <link rel="canonical" href="<?= View::e($resolvedCanonical) ?>">
+
+<?php $faviconSetting = Setting::get('branding', 'favicon', ''); ?>
+<link rel="icon" type="image/svg+xml" href="<?= View::e($faviconSetting ? View::url(ltrim($faviconSetting, '/')) : View::asset('images/techslay-icon.svg')) ?>">
 
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="<?= View::e($siteName) ?>">
@@ -73,18 +76,14 @@ $customCss = Setting::get('general', 'custom_css', '');
 <?php if ($customCss): ?><style><?= $customCss ?></style><?php endif; ?>
 
 <?php View::partial('partials.tailwind-config'); ?>
-<script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-<style>
-  .glass { background: rgba(255,255,255,0.6); backdrop-filter: blur(12px); }
-  .gradient-text { background: linear-gradient(90deg,#7c3aed,#2563eb); -webkit-background-clip: text; background-clip: text; color: transparent; }
-</style>
+<script defer src="<?= View::e(View::asset('js/alpine-collapse.min.js')) ?>"></script>
+<script defer src="<?= View::e(View::asset('js/alpine.min.js')) ?>"></script>
 </head>
 <body class="bg-white text-slate-800 antialiased">
 
 <header class="sticky top-0 z-50 glass border-b border-slate-100">
   <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-    <a href="<?= View::url('/') ?>" class="text-xl font-bold gradient-text"><?= View::e($siteName) ?></a>
+    <a href="<?= View::url('/') ?>"><?php View::partial('partials.logo'); ?></a>
     <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-600">
       <?php foreach ($headerMenu ?? [] as $item): ?>
         <a href="<?= View::url(ltrim($item['url'], '/')) ?>" class="hover:text-brand-500 transition"><?= View::e($item['label']) ?></a>
@@ -99,7 +98,7 @@ $customCss = Setting::get('general', 'custom_css', '');
 <footer class="bg-slate-950 text-slate-300 mt-24">
   <div class="max-w-7xl mx-auto px-6 py-16 grid grid-cols-1 md:grid-cols-4 gap-10">
     <div>
-      <div class="text-xl font-bold text-white mb-3"><?= View::e($siteName) ?></div>
+      <div class="mb-3"><?php View::partial('partials.logo', ['variant' => 'white']); ?></div>
       <p class="text-sm text-slate-400"><?= View::e(Setting::get('branding', 'tagline', '')) ?></p>
     </div>
     <div>
@@ -131,6 +130,8 @@ $customCss = Setting::get('general', 'custom_css', '');
     &copy; <?= date('Y') ?> <?= View::e($siteName) ?>. All rights reserved.
   </div>
 </footer>
+
+<?php View::partial('partials.cookie-banner'); ?>
 
 <?php $customJs = Setting::get('general', 'custom_js', ''); ?>
 <!-- Admin-authored JS (not user input, requires settings.manage permission) — intentionally unescaped raw script. -->

@@ -1,8 +1,10 @@
 <?php
 
+use App\Core\Icon;
 use App\Core\View;
 
 /** @var array $industries */
+/** @var array $iconKeys */
 ?>
 <div class="flex justify-end mb-5">
   <button type="button" onclick="openIndustryModal()" class="rounded-full bg-gradient-to-r from-brand-500 to-accent-500 text-white text-sm font-semibold px-6 py-2.5 shadow-lg shadow-brand-500/30">+ Add Industry</button>
@@ -11,11 +13,14 @@ use App\Core\View;
 <div class="rounded-2xl bg-white border border-slate-100 shadow-sm overflow-hidden">
   <table class="w-full text-sm">
     <thead class="bg-slate-50 text-slate-500 text-xs uppercase">
-      <tr><th class="text-left px-5 py-3">Title</th><th class="text-left px-5 py-3">Slug</th><th class="text-left px-5 py-3">Status</th><th class="text-right px-5 py-3">Actions</th></tr>
+      <tr><th class="text-left px-5 py-3">Icon</th><th class="text-left px-5 py-3">Title</th><th class="text-left px-5 py-3">Slug</th><th class="text-left px-5 py-3">Status</th><th class="text-right px-5 py-3">Actions</th></tr>
     </thead>
     <tbody class="divide-y divide-slate-50">
       <?php foreach ($industries as $industry): ?>
         <tr>
+          <td class="px-5 py-3">
+            <div class="w-8 h-8 rounded-lg bg-brand-50 text-brand-600 flex items-center justify-center"><?= Icon::render($industry['icon'] ?? null, 'w-4 h-4') ?></div>
+          </td>
           <td class="px-5 py-3 font-medium text-slate-800"><?= View::e($industry['title']) ?></td>
           <td class="px-5 py-3 text-slate-500">/<?= View::e($industry['slug']) ?></td>
           <td class="px-5 py-3"><span class="text-xs rounded-full px-2.5 py-1 <?= $industry['status'] === 'published' ? 'bg-green-50 text-green-700' : 'bg-slate-100 text-slate-500' ?>"><?= ucfirst($industry['status']) ?></span></td>
@@ -40,6 +45,12 @@ use App\Core\View;
       <?= View::csrfField() ?>
       <input type="text" id="industry-title" name="title" placeholder="Title" required class="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm">
       <input type="text" id="industry-slug" name="slug" placeholder="Slug (auto if blank)" class="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm">
+      <div>
+        <label class="block text-xs font-medium text-slate-600 mb-1">Icon</label>
+        <select id="industry-icon" name="icon" class="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm">
+          <?php foreach ($iconKeys as $key): ?><option value="<?= $key ?>"><?= ucwords(str_replace('-', ' ', $key)) ?></option><?php endforeach; ?>
+        </select>
+      </div>
       <textarea id="industry-description" name="description" placeholder="Description" rows="3" class="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm"></textarea>
       <div class="grid grid-cols-2 gap-3">
         <input type="number" id="industry-sort" name="sort_order" placeholder="Sort order" class="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm">
@@ -64,6 +75,7 @@ function openIndustryModal(i) {
     document.getElementById('industry-modal-title').textContent = 'Edit Industry';
     document.getElementById('industry-title').value = i.title;
     document.getElementById('industry-slug').value = i.slug;
+    document.getElementById('industry-icon').value = i.icon || '';
     document.getElementById('industry-description').value = i.description || '';
     document.getElementById('industry-sort').value = i.sort_order;
     document.getElementById('industry-status').value = i.status;

@@ -181,6 +181,14 @@ final class MediaController extends Controller
                     unlink($webpPath);
                 }
             }
+
+            if (!empty($media['avif_path'])) {
+                $avifPath = dirname(__DIR__, 3) . '/public' . $media['avif_path'];
+
+                if (is_file($avifPath)) {
+                    unlink($avifPath);
+                }
+            }
         }
 
         Media::forceDelete($id);

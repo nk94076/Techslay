@@ -2,7 +2,7 @@
 -- Initial seed data — roles, permissions, default admin, settings,
 -- default menus and the Home page built from page_sections (JSON).
 -- Run AFTER schema.sql.
--- Default admin login: admin@clicknet.test / ChangeMe!123
+-- Default admin login: admin@techslay.com / ChangeMe!123
 -- (hash below is password_hash('ChangeMe!123', PASSWORD_BCRYPT) — change immediately)
 -- =====================================================================
 
@@ -37,7 +37,7 @@ SELECT 2, id FROM permissions WHERE slug NOT IN ('users.manage','roles.manage','
 
 -- Default admin user — password: ChangeMe!123
 INSERT INTO users (id, role_id, name, email, password, status) VALUES
-(1, 1, 'Super Admin', 'admin@clicknet.test', '$2y$12$q4MMlZa6/TDqHv0n9acv.OmTpP97T/YFjLS1hWalQqN9/o0OoRfMm', 'active');
+(1, 1, 'Super Admin', 'admin@techslay.com', '$2y$12$q4MMlZa6/TDqHv0n9acv.OmTpP97T/YFjLS1hWalQqN9/o0OoRfMm', 'active');
 
 -- ---------------------------------------------------------------------
 -- Global settings
@@ -48,14 +48,14 @@ INSERT INTO settings (`group`, `key`, `value`, type) VALUES
 ('general', 'maintenance_message', 'We are currently performing scheduled maintenance. Please check back soon.', 'textarea'),
 ('general', 'custom_css', '', 'textarea'),
 ('general', 'custom_js', '', 'textarea'),
-('branding', 'site_name', 'ClickNet', 'text'),
+('branding', 'site_name', 'Techslay', 'text'),
 ('branding', 'tagline', 'Performance Affiliate Network', 'text'),
 ('branding', 'logo', '', 'image'),
 ('branding', 'favicon', '', 'image'),
 ('theme', 'primary_color', '#7C3AED', 'color'),
 ('theme', 'accent_color', '#2563EB', 'color'),
-('business', 'company_name', 'ClickNet Media Pvt Ltd', 'text'),
-('business', 'email', 'hello@clicknet.test', 'text'),
+('business', 'company_name', 'Techslay Media Pvt Ltd', 'text'),
+('business', 'email', 'hello@techslay.com', 'text'),
 ('business', 'phone', '+91 00000 00000', 'text'),
 ('business', 'address', 'Mumbai, India', 'text'),
 ('social', 'linkedin_url', '', 'text'),
@@ -69,11 +69,15 @@ INSERT INTO settings (`group`, `key`, `value`, type) VALUES
 ('smtp', 'port', '587', 'text'),
 ('smtp', 'username', '', 'text'),
 ('smtp', 'password', '', 'text'),
-('smtp', 'from_email', 'no-reply@clicknet.test', 'text'),
+('smtp', 'from_email', 'no-reply@techslay.com', 'text'),
 ('recaptcha', 'site_key', '', 'text'),
 ('recaptcha', 'secret_key', '', 'text'),
-('seo', 'default_meta_description', 'ClickNet is a performance affiliate network connecting advertisers and publishers across CPS, CPL and CPI campaigns.', 'textarea'),
-('seo', 'robots_txt', '', 'textarea');
+('seo', 'default_meta_description', 'Techslay is a performance affiliate network connecting advertisers and publishers across CPS, CPL and CPI campaigns.', 'textarea'),
+('seo', 'robots_txt', '', 'textarea'),
+('cookie_banner', 'enabled', 'true', 'boolean'),
+('cookie_banner', 'message', 'We use cookies to run this site and understand how it is used. See our Cookie Policy for details.', 'textarea'),
+('cookie_banner', 'accept_text', 'Accept', 'text'),
+('cookie_banner', 'learn_more_text', 'Cookie Policy', 'text');
 
 -- ---------------------------------------------------------------------
 -- Menus
@@ -124,7 +128,7 @@ INSERT INTO page_sections (page_id, component_type, content, sort_order, status)
     )
 ), 5, 'published'),
 (1, 'why_choose_us', JSON_OBJECT(
-    'title', 'Why Choose ClickNet',
+    'title', 'Why Choose Techslay',
     'items', JSON_ARRAY(
         JSON_OBJECT('icon', 'shield-check', 'title', 'Fraud-Free Traffic', 'description', 'Real-time fraud detection protects every campaign budget.'),
         JSON_OBJECT('icon', 'chart-bar', 'title', 'Transparent Reporting', 'description', 'Live dashboards with full sub-ID and source-level visibility.'),
@@ -144,26 +148,26 @@ INSERT INTO page_sections (page_id, component_type, content, sort_order, status)
 (1, 'publisher_benefits', JSON_OBJECT(
     'title', 'Publisher Benefits',
     'items', JSON_ARRAY(
-        JSON_OBJECT('title', 'High-Converting Offers', 'description', 'Access exclusive CPS, CPL and CPI offers across 11+ industries.'),
-        JSON_OBJECT('title', 'Reliable Payouts', 'description', 'Get paid on time, every time, with flexible payout options.'),
-        JSON_OBJECT('title', 'Dedicated Support', 'description', 'A dedicated account manager to help you scale faster.')
+        JSON_OBJECT('icon', 'sparkles', 'title', 'High-Converting Offers', 'description', 'Access exclusive CPS, CPL and CPI offers across 11+ industries.'),
+        JSON_OBJECT('icon', 'currency-dollar', 'title', 'Reliable Payouts', 'description', 'Get paid on time, every time, with flexible payout options.'),
+        JSON_OBJECT('icon', 'users', 'title', 'Dedicated Support', 'description', 'A dedicated account manager to help you scale faster.')
     )
 ), 8, 'published'),
 (1, 'advertiser_benefits', JSON_OBJECT(
     'title', 'Advertiser Benefits',
     'items', JSON_ARRAY(
-        JSON_OBJECT('title', 'Pay For Performance', 'description', 'Only pay for verified sales, leads or installs — never impressions.'),
-        JSON_OBJECT('title', 'Vetted Publisher Network', 'description', 'Reach thousands of quality-checked publishers instantly.'),
-        JSON_OBJECT('title', 'Real-Time Optimization', 'description', 'Adjust budgets and targeting based on live campaign data.')
+        JSON_OBJECT('icon', 'currency-dollar', 'title', 'Pay For Performance', 'description', 'Only pay for verified sales, leads or installs — never impressions.'),
+        JSON_OBJECT('icon', 'users', 'title', 'Vetted Publisher Network', 'description', 'Reach thousands of quality-checked publishers instantly.'),
+        JSON_OBJECT('icon', 'trending-up', 'title', 'Real-Time Optimization', 'description', 'Adjust budgets and targeting based on live campaign data.')
     )
 ), 9, 'published'),
 (1, 'industries', JSON_OBJECT('title', 'Industries We Serve'), 10, 'published'),
 (1, 'technology', JSON_OBJECT(
     'title', 'Our Technology',
     'items', JSON_ARRAY(
-        JSON_OBJECT('title', 'Real-Time Tracking', 'description', 'Millisecond-accurate click and conversion tracking.'),
-        JSON_OBJECT('title', 'Fraud Detection Engine', 'description', 'Machine-assisted anomaly detection across every source.'),
-        JSON_OBJECT('title', 'Open API', 'description', 'Full REST API access for custom integrations and reporting.')
+        JSON_OBJECT('icon', 'clock', 'title', 'Real-Time Tracking', 'description', 'Millisecond-accurate click and conversion tracking.'),
+        JSON_OBJECT('icon', 'shield-check', 'title', 'Fraud Detection Engine', 'description', 'Machine-assisted anomaly detection across every source.'),
+        JSON_OBJECT('icon', 'cog', 'title', 'Open API', 'description', 'Full REST API access for custom integrations and reporting.')
     )
 ), 11, 'published'),
 (1, 'process', JSON_OBJECT(
@@ -173,46 +177,46 @@ INSERT INTO page_sections (page_id, component_type, content, sort_order, status)
 (1, 'testimonials', JSON_OBJECT('title', 'What Our Partners Say'), 13, 'published'),
 (1, 'latest_blogs', JSON_OBJECT('title', 'From The Blog'), 14, 'published'),
 (1, 'faq', JSON_OBJECT('title', 'Frequently Asked Questions', 'group', 'general'), 15, 'published'),
-(1, 'contact_cta', JSON_OBJECT('title', 'Ready to Grow With ClickNet?', 'button_text', 'Get In Touch', 'button_url', '/contact'), 16, 'published'),
+(1, 'contact_cta', JSON_OBJECT('title', 'Ready to Grow With Techslay?', 'button_text', 'Get In Touch', 'button_url', '/contact'), 16, 'published'),
 (1, 'newsletter', JSON_OBJECT('title', 'Stay Updated'), 17, 'published');
 
 INSERT INTO testimonials (name, designation, company, rating, content, sort_order, status) VALUES
-('Aarav Mehta', 'Growth Lead', 'ShopEase', 5, 'ClickNet helped us scale CPS campaigns profitably within the first month. Reporting transparency is unmatched.', 1, 'published'),
+('Aarav Mehta', 'Growth Lead', 'ShopEase', 5, 'Techslay helped us scale CPS campaigns profitably within the first month. Reporting transparency is unmatched.', 1, 'published'),
 ('Priya Nair', 'Affiliate Manager', 'StudyPath', 5, 'The publisher quality and fraud protection gave us confidence to increase our lead-gen budget significantly.', 2, 'published'),
 ('Rohan Kapoor', 'Top Publisher', 'RK Media', 5, 'Fast, reliable payouts and a dedicated account manager who actually helps us optimize offers.', 3, 'published');
 
 -- ---------------------------------------------------------------------
 -- Sample content so the homepage renders with real data out of the box
 -- ---------------------------------------------------------------------
-INSERT INTO statistics (label, value, suffix, sort_order) VALUES
-('Active Advertisers', '350', '+', 1),
-('Verified Publishers', '2,000', '+', 2),
-('Monthly Conversions', '1.2', 'M+', 3),
-('Countries Served', '40', '+', 4);
+INSERT INTO statistics (label, value, suffix, icon, sort_order) VALUES
+('Active Advertisers', '350', '+', 'briefcase', 1),
+('Verified Publishers', '2,000', '+', 'users', 2),
+('Monthly Conversions', '1.2', 'M+', 'trending-up', 3),
+('Countries Served', '40', '+', 'globe', 4);
 
-INSERT INTO services (title, slug, short_description, sort_order, status) VALUES
-('Affiliate Marketing', 'affiliate-marketing', 'Full-funnel affiliate campaign management across CPS, CPL and CPI models.', 1, 'published'),
-('Publisher Network', 'publisher-network', 'Access a vetted network of high-intent traffic publishers.', 2, 'published'),
-('Performance Marketing', 'performance-marketing', 'Pay only for the outcomes that matter to your business.', 3, 'published'),
-('Tracking Integration', 'tracking-integration', 'Seamless postback and S2S integrations with all major platforms.', 4, 'published'),
-('Creative Development', 'creative-development', 'High-converting ad creatives tailored to each campaign.', 5, 'published'),
-('Fraud Detection', 'fraud-detection', 'Real-time traffic quality monitoring to protect your budget.', 6, 'published');
+INSERT INTO services (title, slug, icon, short_description, sort_order, status) VALUES
+('Affiliate Marketing', 'affiliate-marketing', 'chart-bar', 'Full-funnel affiliate campaign management across CPS, CPL and CPI models.', 1, 'published'),
+('Publisher Network', 'publisher-network', 'users', 'Access a vetted network of high-intent traffic publishers.', 2, 'published'),
+('Performance Marketing', 'performance-marketing', 'trending-up', 'Pay only for the outcomes that matter to your business.', 3, 'published'),
+('Tracking Integration', 'tracking-integration', 'puzzle-piece', 'Seamless postback and S2S integrations with all major platforms.', 4, 'published'),
+('Creative Development', 'creative-development', 'sparkles', 'High-converting ad creatives tailored to each campaign.', 5, 'published'),
+('Fraud Detection', 'fraud-detection', 'shield-check', 'Real-time traffic quality monitoring to protect your budget.', 6, 'published');
 
-INSERT INTO industries (title, slug, description, sort_order, status) VALUES
-('Ecommerce', 'ecommerce', 'Drive qualified purchases with performance-based campaigns.', 1, 'published'),
-('Education', 'education', 'Generate quality leads for course and program enrollments.', 2, 'published'),
-('Travel', 'travel', 'Acquire bookings through high-intent travel publishers.', 3, 'published'),
-('Healthcare', 'healthcare', 'Compliant lead generation for healthcare providers.', 4, 'published'),
-('Subscription Apps', 'subscription-apps', 'Scale installs and trials with CPI-driven campaigns.', 5, 'published'),
-('Food Delivery', 'food-delivery', 'Boost app installs and first orders at scale.', 6, 'published'),
-('SaaS', 'saas', 'Grow sign-ups and demo requests through targeted partners.', 7, 'published'),
-('Retail', 'retail', 'Drive footfall and online sales through affiliate promotions.', 8, 'published'),
-('Fashion', 'fashion', 'Performance campaigns for fashion and apparel brands.', 9, 'published'),
-('Beauty', 'beauty', 'Acquire customers for beauty and cosmetics brands.', 10, 'published'),
-('Electronics', 'electronics', 'Scale sales for consumer electronics retailers.', 11, 'published');
+INSERT INTO industries (title, slug, icon, description, sort_order, status) VALUES
+('Ecommerce', 'ecommerce', 'shopping-bag', 'Drive qualified purchases with performance-based campaigns.', 1, 'published'),
+('Education', 'education', 'academic-cap', 'Generate quality leads for course and program enrollments.', 2, 'published'),
+('Travel', 'travel', 'paper-airplane', 'Acquire bookings through high-intent travel publishers.', 3, 'published'),
+('Healthcare', 'healthcare', 'heart', 'Compliant lead generation for healthcare providers.', 4, 'published'),
+('Subscription Apps', 'subscription-apps', 'device-phone', 'Scale installs and trials with CPI-driven campaigns.', 5, 'published'),
+('Food Delivery', 'food-delivery', 'truck', 'Boost app installs and first orders at scale.', 6, 'published'),
+('SaaS', 'saas', 'tv', 'Grow sign-ups and demo requests through targeted partners.', 7, 'published'),
+('Retail', 'retail', 'building-storefront', 'Drive footfall and online sales through affiliate promotions.', 8, 'published'),
+('Fashion', 'fashion', 'sparkles', 'Performance campaigns for fashion and apparel brands.', 9, 'published'),
+('Beauty', 'beauty', 'heart', 'Acquire customers for beauty and cosmetics brands.', 10, 'published'),
+('Electronics', 'electronics', 'device-phone', 'Scale sales for consumer electronics retailers.', 11, 'published');
 
 INSERT INTO faqs (`group`, question, answer, sort_order, status) VALUES
-('general', 'What is ClickNet?', 'ClickNet is a performance affiliate network connecting advertisers and publishers across CPS, CPL and CPI campaign models.', 1, 'published'),
+('general', 'What is Techslay?', 'Techslay is a performance affiliate network connecting advertisers and publishers across CPS, CPL and CPI campaign models.', 1, 'published'),
 ('general', 'How do I become a publisher?', 'Apply through our Publishers page. Our team reviews every application and onboards approved publishers within 48 hours.', 2, 'published'),
 ('general', 'How do I become an advertiser?', 'Reach out via our Advertisers page or Contact form. We will scope your campaign goals and set up tracking within days.', 3, 'published'),
 ('general', 'What campaign types do you support?', 'We support Cost-Per-Sale (CPS), Cost-Per-Lead (CPL) and Cost-Per-Install (CPI) campaigns across multiple industries.', 4, 'published'),

@@ -7,6 +7,7 @@
 /** @var array $testimonials */
 /** @var array $faqs */
 /** @var array $caseStudies */
+/** @var array $blogPosts */
 
 use App\Core\View;
 
@@ -22,5 +23,6 @@ foreach ($sections as $section):
         'testimonials' => $testimonials,
         'faqs' => $faqs,
         'caseStudies' => $caseStudies,
+        'blogPosts' => $blogPosts ?? [],
     ]);
 endforeach;

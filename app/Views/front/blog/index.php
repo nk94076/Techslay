@@ -1,5 +1,6 @@
 <?php
 
+use App\Core\Icon;
 use App\Core\View;
 
 /** @var array $posts */
@@ -32,7 +33,9 @@ use App\Core\View;
       <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
         <?php foreach ($posts as $post): ?>
           <a href="<?= View::url('blog/' . $post['slug']) ?>" class="rounded-2xl overflow-hidden bg-white border border-slate-100 shadow-sm hover:shadow-lg transition block">
-            <div class="h-40 bg-gradient-to-br from-brand-200 to-accent-200"></div>
+            <div class="h-40 bg-gradient-to-br from-brand-500 to-accent-500 flex items-center justify-center text-white/70">
+              <?= Icon::render('chat-bubble', 'w-10 h-10') ?>
+            </div>
             <div class="p-6">
               <?php if ($post['category_name']): ?><div class="text-xs font-medium text-brand-600 mb-1"><?= View::e($post['category_name']) ?></div><?php endif; ?>
               <h3 class="font-semibold text-slate-900"><?= View::e($post['title']) ?></h3>

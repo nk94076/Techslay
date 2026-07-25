@@ -1,9 +1,12 @@
 <?php
 
 use App\Core\View;
+use App\Models\Setting;
 
 /** @var string $content */
-$pageTitle = ($pageTitle ?? 'Admin') . ' | ClickNet Admin';
+$guestSiteName = Setting::get('branding', 'site_name', 'Techslay');
+$pageTitle = ($pageTitle ?? 'Admin') . ' | ' . $guestSiteName . ' Admin';
+$guestFavicon = Setting::get('branding', 'favicon', '');
 ?>
 <!doctype html>
 <html lang="en">
@@ -12,12 +15,13 @@ $pageTitle = ($pageTitle ?? 'Admin') . ' | ClickNet Admin';
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title><?= View::e($pageTitle) ?></title>
 <meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/svg+xml" href="<?= View::e($guestFavicon ? View::url(ltrim($guestFavicon, '/')) : View::asset('images/techslay-icon.svg')) ?>">
 <?php View::partial('partials.tailwind-config'); ?>
 </head>
 <body class="min-h-screen bg-gradient-to-br from-slate-950 via-purple-950 to-slate-900 flex items-center justify-center p-6">
 <div class="w-full max-w-md">
-  <div class="text-center mb-8">
-    <div class="text-2xl font-bold text-white">ClickNet <span class="text-brand-400">Admin</span></div>
+  <div class="text-center mb-8 flex justify-center">
+    <?php View::partial('partials.logo', ['variant' => 'white', 'textClass' => 'text-2xl']); ?>
   </div>
   <div class="rounded-2xl bg-white shadow-2xl p-8">
     <?php if ($error = \App\Core\Session::getFlash('error')): ?>

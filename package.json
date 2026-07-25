@@ -1,0 +1,20 @@
+{
+  "name": "techslay",
+  "version": "1.0.0",
+  "description": "A production-grade affiliate marketing network website with a custom-built CMS. Built on Core PHP 8.3+, PDO and a hand-rolled MVC framework (no WordPress, Laravel, or third-party framework), with a Tailwind CSS + Alpine.js frontend.",
+  "private": true,
+  "scripts": {
+    "build:css": "tailwindcss -i ./resources/css/app.css -o ./public/assets/css/app.css --minify",
+    "watch:css": "tailwindcss -i ./resources/css/app.css -o ./public/assets/css/app.css --watch"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "tailwindcss": "^3.4.19"
+  },
+  "dependencies": {
+    "@alpinejs/collapse": "^3.15.12",
+    "alpinejs": "^3.15.12"
+  }
+}

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controllers\Admin;
 
 use App\Core\Controller;
+use App\Core\Icon;
 use App\Core\Session;
 use App\Models\ActivityLog;
 use App\Models\Service;
@@ -17,6 +18,7 @@ final class ServiceController extends Controller
             'pageTitle' => 'Services',
             'pageHeading' => 'Services',
             'services' => Service::all('sort_order ASC'),
+            'iconKeys' => Icon::keys(),
         ], 'admin.layouts.app');
     }
 
@@ -78,9 +80,12 @@ final class ServiceController extends Controller
         $slug = (string) $this->input('slug', '') ?: $title;
         $slug = strtolower(trim(preg_replace('/[^a-z0-9]+/i', '-', $slug) ?? '', '-'));
 
+        $icon = (string) $this->input('icon', '');
+
         return [
             'title' => $title,
             'slug' => $slug,
+            'icon' => in_array($icon, Icon::keys(), true) ? $icon : null,
             'short_description' => trim((string) $this->input('short_description', '')),
             'content' => trim((string) $this->input('content', '')),
             'sort_order' => (int) $this->input('sort_order', 0),

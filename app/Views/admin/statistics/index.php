@@ -1,8 +1,10 @@
 <?php
 
+use App\Core\Icon;
 use App\Core\View;
 
 /** @var array $statistics */
+/** @var array $iconKeys */
 ?>
 <div class="flex justify-end mb-5">
   <button type="button" onclick="openStatModal()" class="rounded-full bg-gradient-to-r from-brand-500 to-accent-500 text-white text-sm font-semibold px-6 py-2.5 shadow-lg shadow-brand-500/30">+ Add Statistic</button>
@@ -11,6 +13,9 @@ use App\Core\View;
 <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
   <?php foreach ($statistics as $stat): ?>
     <div class="rounded-2xl bg-white border border-slate-100 shadow-sm p-6">
+      <?php if (!empty($stat['icon'])): ?>
+        <div class="w-8 h-8 rounded-lg bg-brand-50 text-brand-600 flex items-center justify-center mb-3"><?= Icon::render($stat['icon'], 'w-4 h-4') ?></div>
+      <?php endif; ?>
       <div class="text-2xl font-extrabold gradient-text"><?= View::e($stat['value']) ?><?= View::e($stat['suffix'] ?? '') ?></div>
       <div class="mt-1 text-sm text-slate-500"><?= View::e($stat['label']) ?></div>
       <div class="mt-3 flex gap-3 text-xs">
@@ -35,6 +40,13 @@ use App\Core\View;
         <input type="text" id="stat-value" name="value" placeholder="Value (e.g. 350)" required class="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm">
         <input type="text" id="stat-suffix" name="suffix" placeholder="Suffix (e.g. +)" class="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm">
       </div>
+      <div>
+        <label class="block text-xs font-medium text-slate-600 mb-1">Icon (optional)</label>
+        <select id="stat-icon" name="icon" class="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm">
+          <option value="">None</option>
+          <?php foreach ($iconKeys as $key): ?><option value="<?= $key ?>"><?= ucwords(str_replace('-', ' ', $key)) ?></option><?php endforeach; ?>
+        </select>
+      </div>
       <input type="number" id="stat-sort" name="sort_order" placeholder="Sort order" class="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm">
       <select id="stat-status" name="status" class="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm">
         <option value="published">Published</option>
@@ -57,6 +69,7 @@ function openStatModal(stat) {
     document.getElementById('stat-label').value = stat.label;
     document.getElementById('stat-value').value = stat.value;
     document.getElementById('stat-suffix').value = stat.suffix || '';
+    document.getElementById('stat-icon').value = stat.icon || '';
     document.getElementById('stat-sort').value = stat.sort_order;
     document.getElementById('stat-status').value = stat.status;
     form.action = statsBaseUrl + '/' + stat.id;

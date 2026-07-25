@@ -9,7 +9,7 @@ use App\Core\View;
 $labels = [
     'general' => 'General', 'branding' => 'Branding', 'theme' => 'Theme', 'business' => 'Business Info',
     'social' => 'Social Links', 'analytics' => 'Analytics', 'smtp' => 'SMTP',
-    'recaptcha' => 'reCAPTCHA', 'seo' => 'SEO Defaults',
+    'recaptcha' => 'reCAPTCHA', 'seo' => 'SEO Defaults', 'cookie_banner' => 'Cookie Banner',
 ];
 ?>
 <div class="flex flex-wrap gap-2 mb-6">

@@ -6,6 +6,7 @@ namespace App\Controllers\Front\Concerns;
 
 use App\Core\Seo;
 use App\Core\View;
+use App\Models\BlogPost;
 use App\Models\CaseStudy;
 use App\Models\Faq;
 use App\Models\Industry;
@@ -45,6 +46,7 @@ trait RendersFrontPage
             'testimonials' => Testimonial::published(),
             'faqs' => Faq::byGroup('general'),
             'caseStudies' => CaseStudy::published(),
+            'blogPosts' => BlogPost::recentPublished(3),
             'headerMenu' => Menu::itemsForLocation('header'),
             'footerMenu' => Menu::itemsForLocation('footer'),
             'seo' => $this->buildPageSeo($page, $sections),

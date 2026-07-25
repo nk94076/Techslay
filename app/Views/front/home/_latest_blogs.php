@@ -1,5 +1,6 @@
 <?php
 
+use App\Core\Icon;
 use App\Core\View;
 
 /** @var array $content */
@@ -12,7 +13,9 @@ $blogPosts = $blogPosts ?? [];
     <div class="grid md:grid-cols-3 gap-6">
       <?php foreach ($blogPosts as $post): ?>
         <a href="<?= View::url('blog/' . $post['slug']) ?>" class="rounded-2xl overflow-hidden bg-white border border-slate-100 shadow-sm hover:shadow-lg transition block">
-          <div class="h-40 bg-gradient-to-br from-brand-200 to-accent-200"></div>
+          <div class="h-40 bg-gradient-to-br from-brand-500 to-accent-500 flex items-center justify-center text-white/70">
+            <?= Icon::render('chat-bubble', 'w-10 h-10') ?>
+          </div>
           <div class="p-6">
             <h3 class="font-semibold text-slate-900"><?= View::e($post['title']) ?></h3>
             <p class="mt-2 text-sm text-slate-500"><?= View::e($post['excerpt'] ?? '') ?></p>
@@ -23,4 +26,3 @@ $blogPosts = $blogPosts ?? [];
   </div>
 </section>
 <?php endif; ?>
-<!-- Blog module ships in Phase 4 of the build; this section renders automatically once posts exist. -->

@@ -3,9 +3,11 @@
 use App\Core\Auth;
 use App\Core\Session;
 use App\Core\View;
+use App\Models\Setting;
 
 /** @var string $content */
-$pageTitle = ($pageTitle ?? 'Dashboard') . ' | ClickNet Admin';
+$adminSiteName = Setting::get('branding', 'site_name', 'Techslay');
+$pageTitle = ($pageTitle ?? 'Dashboard') . ' | ' . $adminSiteName . ' Admin';
 $currentUser = Auth::user();
 
 $navItems = [
@@ -37,14 +39,16 @@ $currentPath = trim($_SERVER['REQUEST_URI'] ?? '', '/');
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title><?= View::e($pageTitle) ?></title>
 <meta name="robots" content="noindex, nofollow">
+<?php $adminFavicon = Setting::get('branding', 'favicon', ''); ?>
+<link rel="icon" type="image/svg+xml" href="<?= View::e($adminFavicon ? View::url(ltrim($adminFavicon, '/')) : View::asset('images/techslay-icon.svg')) ?>">
 <?php View::partial('partials.tailwind-config'); ?>
 </head>
 <body class="bg-slate-50 text-slate-800">
 <div class="flex min-h-screen">
 
   <aside class="w-64 bg-slate-950 text-slate-300 flex-shrink-0 hidden lg:flex lg:flex-col">
-    <div class="px-6 py-5 text-white font-bold text-lg border-b border-white/10">
-      ClickNet <span class="text-brand-400">Admin</span>
+    <div class="px-6 py-5 border-b border-white/10">
+      <?php View::partial('partials.logo', ['variant' => 'white', 'textClass' => 'text-base']); ?>
     </div>
     <nav class="flex-1 overflow-y-auto py-4 space-y-1 px-3">
       <?php foreach ($navItems as $item): ?>

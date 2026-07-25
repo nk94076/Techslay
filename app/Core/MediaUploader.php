@@ -8,9 +8,9 @@ use RuntimeException;
 
 /**
  * Validates and stores an uploaded file under public/uploads/{Y}/{m}/,
- * generating a WebP sibling for raster images. Every check runs against
- * the actual file content (finfo + getimagesize), never the client-supplied
- * filename or Content-Type header.
+ * generating WebP and AVIF siblings for raster images. Every check runs
+ * against the actual file content (finfo + getimagesize), never the
+ * client-supplied filename or Content-Type header.
  */
 final class MediaUploader
 {
@@ -60,6 +60,7 @@ final class MediaUploader
                 'original_name' => $originalName,
                 'path' => $publicPath,
                 'webp_path' => null,
+                'avif_path' => null,
                 'mime_type' => 'image/svg+xml',
                 'type' => 'svg',
                 'size_bytes' => filesize($destination) ?: 0,
@@ -76,7 +77,7 @@ final class MediaUploader
             move_uploaded_file($file['tmp_name'], $destination);
 
             $dimensions = @getimagesize($destination);
-            $webpPath = self::generateWebp($destination, $uploadDir, $diskName);
+            [$webpPath, $avifPath] = self::generateModernFormats($destination, $uploadDir, $diskName);
 
             return [
                 'folder_id' => $folderId,
@@ -85,6 +86,7 @@ final class MediaUploader
                 'original_name' => $originalName,
                 'path' => $publicPath,
                 'webp_path' => $webpPath,
+                'avif_path' => $avifPath,
                 'mime_type' => $mimeType,
                 'type' => 'image',
                 'size_bytes' => filesize($destination) ?: 0,
@@ -103,6 +105,7 @@ final class MediaUploader
                 'original_name' => $originalName,
                 'path' => $publicPath,
                 'webp_path' => null,
+                'avif_path' => null,
                 'mime_type' => $mimeType,
                 'type' => 'video',
                 'size_bytes' => filesize($destination) ?: 0,
@@ -121,6 +124,7 @@ final class MediaUploader
                 'original_name' => $originalName,
                 'path' => $publicPath,
                 'webp_path' => null,
+                'avif_path' => null,
                 'mime_type' => $mimeType,
                 'type' => 'document',
                 'size_bytes' => filesize($destination) ?: 0,
@@ -154,12 +158,13 @@ final class MediaUploader
         file_put_contents($destination, $contents);
     }
 
-    private static function generateWebp(string $sourcePath, string $uploadDir, string $diskName): ?string
+    /**
+     * Generates WebP and (where GD supports it) AVIF siblings from a single
+     * decode of the source image. Returns [webpPath, avifPath]; either may
+     * be null if the format isn't supported or the source can't be decoded.
+     */
+    private static function generateModernFormats(string $sourcePath, string $uploadDir, string $diskName): array
     {
-        if (!function_exists('imagewebp')) {
-            return null;
-        }
-
         $extension = strtolower(pathinfo($sourcePath, PATHINFO_EXTENSION));
 
         $image = match ($extension) {
@@ -170,21 +175,35 @@ final class MediaUploader
         };
 
         if ($image === null || $image === false) {
-            return null;
+            return [null, null];
         }
-
-        $webpName = pathinfo($diskName, PATHINFO_FILENAME) . '.webp';
-        $webpDestination = $uploadDir . '/' . $webpName;
 
         imagepalettetotruecolor($image);
         imagealphablending($image, true);
         imagesavealpha($image, true);
-        imagewebp($image, $webpDestination, 82);
-        imagedestroy($image);
 
         $year = date('Y');
         $month = date('m');
+        $baseName = pathinfo($diskName, PATHINFO_FILENAME);
 
-        return "/uploads/{$year}/{$month}/{$webpName}";
+        $webpPath = null;
+
+        if (function_exists('imagewebp')) {
+            $webpName = $baseName . '.webp';
+            imagewebp($image, $uploadDir . '/' . $webpName, 82);
+            $webpPath = "/uploads/{$year}/{$month}/{$webpName}";
+        }
+
+        $avifPath = null;
+
+        if (function_exists('imageavif')) {
+            $avifName = $baseName . '.avif';
+            imageavif($image, $uploadDir . '/' . $avifName, 60);
+            $avifPath = "/uploads/{$year}/{$month}/{$avifName}";
+        }
+
+        imagedestroy($image);
+
+        return [$webpPath, $avifPath];
     }
 }

@@ -117,6 +117,7 @@ CREATE TABLE media (
     original_name VARCHAR(255) NOT NULL,
     path VARCHAR(500) NOT NULL,
     webp_path VARCHAR(500) DEFAULT NULL,
+    avif_path VARCHAR(500) DEFAULT NULL,
     mime_type VARCHAR(100) NOT NULL,
     type ENUM('image','video','svg','document','other') NOT NULL DEFAULT 'image',
     size_bytes INT UNSIGNED NOT NULL DEFAULT 0,

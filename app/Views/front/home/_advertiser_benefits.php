@@ -1,5 +1,6 @@
 <?php
 
+use App\Core\Icon;
 use App\Core\View;
 
 /** @var array $content */
@@ -10,9 +11,14 @@ $items = $content['items'] ?? [];
   <div class="max-w-6xl mx-auto px-6 grid lg:grid-cols-2 gap-12 items-center">
     <div class="order-2 lg:order-1 space-y-4">
       <?php foreach ($items as $item): ?>
-        <div class="rounded-2xl bg-white border border-slate-100 shadow-sm p-6">
-          <h3 class="font-semibold text-slate-900"><?= View::e($item['title'] ?? '') ?></h3>
-          <p class="mt-1 text-sm text-slate-500"><?= View::e($item['description'] ?? '') ?></p>
+        <div class="rounded-2xl bg-white border border-slate-100 shadow-sm p-6 flex items-start gap-4">
+          <div class="w-9 h-9 rounded-lg bg-brand-50 text-brand-600 flex items-center justify-center flex-shrink-0">
+            <?= Icon::render($item['icon'] ?? null, 'w-5 h-5') ?>
+          </div>
+          <div>
+            <h3 class="font-semibold text-slate-900"><?= View::e($item['title'] ?? '') ?></h3>
+            <p class="mt-1 text-sm text-slate-500"><?= View::e($item['description'] ?? '') ?></p>
+          </div>
         </div>
       <?php endforeach; ?>
     </div>

@@ -12,7 +12,7 @@ use App\Models\Setting;
 
 final class SettingsController extends Controller
 {
-    private const GROUPS = ['general', 'branding', 'theme', 'business', 'social', 'analytics', 'smtp', 'recaptcha', 'seo'];
+    private const GROUPS = ['general', 'branding', 'theme', 'business', 'social', 'analytics', 'smtp', 'recaptcha', 'seo', 'cookie_banner'];
 
     public function index(string $group = 'branding'): void
     {

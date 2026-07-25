@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controllers\Admin;
 
 use App\Core\Controller;
+use App\Core\Icon;
 use App\Core\Session;
 use App\Models\ActivityLog;
 use App\Models\Statistic;
@@ -17,6 +18,7 @@ final class StatisticController extends Controller
             'pageTitle' => 'Statistics',
             'pageHeading' => 'Statistics',
             'statistics' => Statistic::all('sort_order ASC'),
+            'iconKeys' => Icon::keys(),
         ], 'admin.layouts.app');
     }
 
@@ -55,11 +57,13 @@ final class StatisticController extends Controller
 
     private function payload(): array
     {
+        $icon = (string) $this->input('icon', '');
+
         return [
             'label' => trim((string) $this->input('label', '')),
             'value' => trim((string) $this->input('value', '')),
             'suffix' => trim((string) $this->input('suffix', '')),
-            'icon' => trim((string) $this->input('icon', '')),
+            'icon' => in_array($icon, Icon::keys(), true) ? $icon : null,
             'sort_order' => (int) $this->input('sort_order', 0),
             'status' => $this->input('status', 'published') === 'draft' ? 'draft' : 'published',
         ];

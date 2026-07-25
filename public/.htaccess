@@ -1,0 +1,19 @@
+RewriteEngine On
+
+# Route everything except existing files/directories through the front controller.
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ index.php [QSA,L]
+
+# Security headers
+<IfModule mod_headers.c>
+  Header set X-Content-Type-Options "nosniff"
+  Header set X-Frame-Options "SAMEORIGIN"
+  Header set Referrer-Policy "strict-origin-when-cross-origin"
+  Header set X-XSS-Protection "1; mode=block"
+</IfModule>
+
+# Never serve dotfiles (.env, .git, etc.)
+<FilesMatch "^\.">
+  Require all denied
+</FilesMatch>

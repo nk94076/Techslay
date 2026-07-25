@@ -43,6 +43,11 @@ INSERT INTO users (id, role_id, name, email, password, status) VALUES
 -- Global settings
 -- ---------------------------------------------------------------------
 INSERT INTO settings (`group`, `key`, `value`, type) VALUES
+('general', 'maintenance_mode', 'false', 'boolean'),
+('general', 'coming_soon_mode', 'false', 'boolean'),
+('general', 'maintenance_message', 'We are currently performing scheduled maintenance. Please check back soon.', 'textarea'),
+('general', 'custom_css', '', 'textarea'),
+('general', 'custom_js', '', 'textarea'),
 ('branding', 'site_name', 'ClickNet', 'text'),
 ('branding', 'tagline', 'Performance Affiliate Network', 'text'),
 ('branding', 'logo', '', 'image'),

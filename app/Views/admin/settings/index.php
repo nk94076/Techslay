@@ -7,7 +7,7 @@ use App\Core\View;
 /** @var array $settings */
 
 $labels = [
-    'branding' => 'Branding', 'theme' => 'Theme', 'business' => 'Business Info',
+    'general' => 'General', 'branding' => 'Branding', 'theme' => 'Theme', 'business' => 'Business Info',
     'social' => 'Social Links', 'analytics' => 'Analytics', 'smtp' => 'SMTP',
     'recaptcha' => 'reCAPTCHA', 'seo' => 'SEO Defaults',
 ];

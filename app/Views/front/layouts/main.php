@@ -49,6 +49,29 @@ $twitterCard = $seo['twitter_card'] ?? 'summary_large_image';
 
 <?= Seo::render(array_merge([Seo::organizationSchema(), Seo::websiteSchema()], $seo['schemas'] ?? [])) ?>
 
+<?php
+$gaId = Setting::get('analytics', 'google_analytics_id', '');
+$gtmId = Setting::get('analytics', 'gtm_id', '');
+$metaPixelId = Setting::get('analytics', 'meta_pixel_id', '');
+$clarityId = Setting::get('analytics', 'clarity_id', '');
+$customCss = Setting::get('general', 'custom_css', '');
+?>
+<?php if ($gtmId): ?>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','<?= View::e($gtmId) ?>');</script>
+<?php endif; ?>
+<?php if ($gaId): ?>
+<script async src="https://www.googletagmanager.com/gtag/js?id=<?= View::e($gaId) ?>"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','<?= View::e($gaId) ?>');</script>
+<?php endif; ?>
+<?php if ($clarityId): ?>
+<script>(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,"clarity","script","<?= View::e($clarityId) ?>");</script>
+<?php endif; ?>
+<?php if ($metaPixelId): ?>
+<script>!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','<?= View::e($metaPixelId) ?>');fbq('track','PageView');</script>
+<?php endif; ?>
+<!-- Admin-authored CSS (not user input, requires settings.manage permission) — intentionally unescaped raw CSS. -->
+<?php if ($customCss): ?><style><?= $customCss ?></style><?php endif; ?>
+
 <?php View::partial('partials.tailwind-config'); ?>
 <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
@@ -108,6 +131,10 @@ $twitterCard = $seo['twitter_card'] ?? 'summary_large_image';
     &copy; <?= date('Y') ?> <?= View::e($siteName) ?>. All rights reserved.
   </div>
 </footer>
+
+<?php $customJs = Setting::get('general', 'custom_js', ''); ?>
+<!-- Admin-authored JS (not user input, requires settings.manage permission) — intentionally unescaped raw script. -->
+<?php if ($customJs): ?><script><?= $customJs ?></script><?php endif; ?>
 
 </body>
 </html>

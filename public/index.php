@@ -5,6 +5,8 @@ declare(strict_types=1);
 use App\Core\Autoloader;
 use App\Core\Router;
 use App\Core\Session;
+use App\Core\View;
+use App\Models\Setting;
 
 const BASE_PATH = __DIR__ . '/..';
 
@@ -27,9 +29,30 @@ set_exception_handler(static function (Throwable $e) use ($config): void {
     }
 });
 
-if ($config['app']['maintenance_mode']) {
+$requestPath = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH) ?? '/';
+$isAdminPath = str_starts_with($requestPath, '/admin');
+
+// The config flag is a file-level kill switch (works even if the database is
+// unreachable); the Settings-backed flags are the normal admin-toggleable
+// path. Either can trigger it. The admin area is always exempt so an admin
+// can still log in and turn maintenance mode back off.
+if (!$isAdminPath && ($config['app']['maintenance_mode'] || Setting::get('general', 'maintenance_mode') === 'true')) {
     http_response_code(503);
-    echo 'This site is currently undergoing maintenance. Please check back soon.';
+    View::output('front.errors.maintenance', [
+        'siteName' => Setting::get('branding', 'site_name', $config['app']['name']),
+        'heading' => 'Under Maintenance',
+        'message' => Setting::get('general', 'maintenance_message', 'We are currently performing scheduled maintenance. Please check back soon.'),
+    ]);
+    exit;
+}
+
+if (!$isAdminPath && Setting::get('general', 'coming_soon_mode') === 'true') {
+    http_response_code(503);
+    View::output('front.errors.maintenance', [
+        'siteName' => Setting::get('branding', 'site_name', $config['app']['name']),
+        'heading' => 'Coming Soon',
+        'message' => 'We are putting the finishing touches on our new site. Check back soon.',
+    ]);
     exit;
 }
 

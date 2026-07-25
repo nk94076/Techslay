@@ -43,6 +43,14 @@ abstract class Controller
         return Request::input($key, $default);
     }
 
+    /** Reads an optional integer field, treating missing/empty as null instead of casting to 0. */
+    protected function nullableInt(string $key): ?int
+    {
+        $value = Request::input($key);
+
+        return ($value === null || $value === '') ? null : (int) $value;
+    }
+
     protected function validate(array $data, array $rules): Validator
     {
         return new Validator($data, $rules);

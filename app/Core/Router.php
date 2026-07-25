@@ -91,6 +91,14 @@ final class Router
 
             $params = array_filter($matches, static fn ($key) => !is_int($key), ARRAY_FILTER_USE_KEY);
 
+            // Route params always arrive as strings from the regex match; coerce
+            // purely-numeric ones (ids) to int so they satisfy typed controller
+            // parameters under strict_types. Non-numeric params (e.g. {token}) pass through untouched.
+            $params = array_map(
+                static fn ($value) => ctype_digit($value) ? (int) $value : $value,
+                $params
+            );
+
             foreach ($route['middleware'] as $middlewareEntry) {
                 /** @var MiddlewareInterface $middleware */
                 $middleware = $middlewareEntry instanceof MiddlewareInterface

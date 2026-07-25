@@ -67,7 +67,8 @@ INSERT INTO settings (`group`, `key`, `value`, type) VALUES
 ('smtp', 'from_email', 'no-reply@clicknet.test', 'text'),
 ('recaptcha', 'site_key', '', 'text'),
 ('recaptcha', 'secret_key', '', 'text'),
-('seo', 'default_meta_description', 'ClickNet is a performance affiliate network connecting advertisers and publishers across CPS, CPL and CPI campaigns.', 'textarea');
+('seo', 'default_meta_description', 'ClickNet is a performance affiliate network connecting advertisers and publishers across CPS, CPL and CPI campaigns.', 'textarea'),
+('seo', 'robots_txt', '', 'textarea');
 
 -- ---------------------------------------------------------------------
 -- Menus

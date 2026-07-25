@@ -3,22 +3,52 @@
 /** @var string $content */
 /** @var array $headerMenu */
 /** @var array $footerMenu */
+/** @var array $seo Optional per-page SEO overrides: title, description, keywords,
+ *  canonical, robots_index, robots_follow, og_title, og_description, og_image,
+ *  twitter_card, schemas (array of pre-built JSON-LD arrays). */
 
+use App\Core\Seo;
 use App\Core\View;
 use App\Models\Setting;
 
 $siteName = Setting::get('branding', 'site_name', 'ClickNet');
-$pageTitle = isset($pageTitle) ? $pageTitle . ' | ' . $siteName : $siteName;
-$metaDescription = $metaDescription ?? Setting::get('seo', 'default_meta_description', '');
+$seo = $seo ?? [];
+
+$resolvedTitle = $seo['title'] ?? ($pageTitle ?? '');
+$fullTitle = $resolvedTitle !== '' ? $resolvedTitle . ' | ' . $siteName : $siteName;
+$resolvedDescription = $seo['description'] ?? ($metaDescription ?? Setting::get('seo', 'default_meta_description', ''));
+$resolvedCanonical = $seo['canonical'] ?? View::url(ltrim($_SERVER['REQUEST_URI'] ?? '/', '/'));
+$robotsIndex = $seo['robots_index'] ?? 'index';
+$robotsFollow = $seo['robots_follow'] ?? 'follow';
+$ogTitle = $seo['og_title'] ?? ($resolvedTitle ?: $siteName);
+$ogDescription = $seo['og_description'] ?? $resolvedDescription;
+$ogImage = $seo['og_image'] ?? '';
+$twitterCard = $seo['twitter_card'] ?? 'summary_large_image';
 ?>
 <!doctype html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title><?= View::e($pageTitle) ?></title>
-<meta name="description" content="<?= View::e($metaDescription) ?>">
-<link rel="canonical" href="<?= View::e(View::url(ltrim($_SERVER['REQUEST_URI'] ?? '/', '/'))) ?>">
+<title><?= View::e($fullTitle) ?></title>
+<meta name="description" content="<?= View::e($resolvedDescription) ?>">
+<?php if ($seo['keywords'] ?? ''): ?><meta name="keywords" content="<?= View::e($seo['keywords']) ?>"><?php endif; ?>
+<meta name="robots" content="<?= View::e($robotsIndex . ', ' . $robotsFollow) ?>">
+<link rel="canonical" href="<?= View::e($resolvedCanonical) ?>">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="<?= View::e($siteName) ?>">
+<meta property="og:title" content="<?= View::e($ogTitle) ?>">
+<meta property="og:description" content="<?= View::e($ogDescription) ?>">
+<meta property="og:url" content="<?= View::e($resolvedCanonical) ?>">
+<?php if ($ogImage !== ''): ?><meta property="og:image" content="<?= View::e($ogImage) ?>"><?php endif; ?>
+<meta name="twitter:card" content="<?= View::e($twitterCard) ?>">
+<meta name="twitter:title" content="<?= View::e($ogTitle) ?>">
+<meta name="twitter:description" content="<?= View::e($ogDescription) ?>">
+<?php if ($ogImage !== ''): ?><meta name="twitter:image" content="<?= View::e($ogImage) ?>"><?php endif; ?>
+
+<?= Seo::render(array_merge([Seo::organizationSchema(), Seo::websiteSchema()], $seo['schemas'] ?? [])) ?>
+
 <?php View::partial('partials.tailwind-config'); ?>
 <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>

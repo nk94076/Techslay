@@ -14,6 +14,7 @@ use App\Controllers\Admin\MediaController;
 use App\Controllers\Admin\MenuController;
 use App\Controllers\Admin\PageController;
 use App\Controllers\Admin\PageSectionController;
+use App\Controllers\Admin\RedirectController;
 use App\Controllers\Admin\RoleController;
 use App\Controllers\Admin\ServiceController;
 use App\Controllers\Admin\SettingsController;
@@ -84,6 +85,13 @@ $router->group('/admin', [], function (Router $router): void {
         $router->get('', [SettingsController::class, 'index']);
         $router->get('/{group}', [SettingsController::class, 'index']);
         $router->post('/{group}', [SettingsController::class, 'update'], [CsrfMiddleware::class]);
+    });
+
+    // Redirects (part of the SEO toolset — robots.txt/sitemap live under Settings/routes)
+    $router->group('/redirects', [AuthMiddleware::class, PermissionMiddleware::require('seo.manage')], function (Router $router): void {
+        $router->get('', [RedirectController::class, 'index']);
+        $router->post('', [RedirectController::class, 'create'], [CsrfMiddleware::class]);
+        $router->post('/{id}/delete', [RedirectController::class, 'delete'], [CsrfMiddleware::class]);
     });
 
     // Users

@@ -12,6 +12,7 @@ use App\Models\Author;
 use App\Models\BlogCategory;
 use App\Models\BlogPost;
 use App\Models\BlogTag;
+use App\Models\SeoMeta;
 
 final class BlogPostController extends Controller
 {
@@ -50,6 +51,7 @@ final class BlogPostController extends Controller
             'categories' => BlogCategory::all('name ASC'),
             'authors' => Author::all('name ASC'),
             'postTags' => [],
+            'seo' => null,
         ], 'admin.layouts.app');
     }
 
@@ -81,6 +83,7 @@ final class BlogPostController extends Controller
             'categories' => BlogCategory::all('name ASC'),
             'authors' => Author::all('name ASC'),
             'postTags' => array_column($tagRows, 'name'),
+            'seo' => SeoMeta::forEntity('blog_post', $id),
         ], 'admin.layouts.app');
     }
 
@@ -153,6 +156,7 @@ final class BlogPostController extends Controller
         }
 
         $this->syncTags($id, (string) $this->input('tags', ''));
+        SeoMeta::upsertFromRequest('blog_post', $id);
 
         Session::flash('success', 'Post saved.');
         $this->redirect('admin/blog/' . $id . '/edit');

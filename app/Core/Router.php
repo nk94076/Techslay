@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Core;
 
+use App\Models\Redirect;
+
 /**
  * Minimal regex-based router: supports GET/POST/PUT/PATCH/DELETE,
  * {param} placeholders, per-route middleware stacks and route groups
@@ -117,7 +119,26 @@ final class Router
             return;
         }
 
+        if ($method === 'GET' && $this->redirectTo($uri)) {
+            return;
+        }
+
         $this->notFound();
+    }
+
+    /** Checks the admin-managed redirects table for an unmatched GET path. Returns true if a redirect was sent. */
+    private function redirectTo(string $uri): bool
+    {
+        $redirect = Redirect::findByPath($uri);
+
+        if ($redirect === null) {
+            return false;
+        }
+
+        Redirect::recordHit((int) $redirect['id']);
+        header('Location: ' . View::url(ltrim($redirect['to_path'], '/')), true, (int) $redirect['status_code']);
+
+        return true;
     }
 
     private function notFound(): void

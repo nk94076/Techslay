@@ -4,12 +4,15 @@ declare(strict_types=1);
 
 namespace App\Controllers\Front\Concerns;
 
+use App\Core\Seo;
+use App\Core\View;
 use App\Models\CaseStudy;
 use App\Models\Faq;
 use App\Models\Industry;
 use App\Models\Menu;
 use App\Models\Page;
 use App\Models\Service;
+use App\Models\SeoMeta;
 use App\Models\Statistic;
 use App\Models\Testimonial;
 
@@ -26,8 +29,7 @@ trait RendersFrontPage
         $page = Page::findBySlug($slug);
 
         if ($page === null) {
-            http_response_code(404);
-            $this->view('front.errors.404', ['pageTitle' => 'Page Not Found'], 'front.layouts.main');
+            $this->notFoundOr404View('/' . $slug, 'Page Not Found');
 
             return;
         }
@@ -45,8 +47,57 @@ trait RendersFrontPage
             'caseStudies' => CaseStudy::published(),
             'headerMenu' => Menu::itemsForLocation('header'),
             'footerMenu' => Menu::itemsForLocation('footer'),
+            'seo' => $this->buildPageSeo($page, $sections),
         ], $overrides);
 
         $this->view('front.pages.dynamic', $data, 'front.layouts.main');
+    }
+
+    private function buildPageSeo(array $page, array $sections): array
+    {
+        $seoRow = SeoMeta::forEntity('page', (int) $page['id']);
+
+        $schemas = [];
+
+        if ($page['slug'] !== 'home') {
+            $schemas[] = Seo::breadcrumbSchema([
+                ['name' => 'Home', 'url' => View::url('/')],
+                ['name' => $page['title'], 'url' => View::url($page['slug'])],
+            ]);
+        }
+
+        foreach ($sections as $section) {
+            if ($section['component_type'] === 'faq') {
+                $faqs = Faq::byGroup((string) ($section['content']['group'] ?? 'general'));
+
+                if ($faqs !== []) {
+                    $schemas[] = Seo::faqSchema($faqs);
+                }
+
+                break;
+            }
+        }
+
+        return $this->seoFromRow($seoRow, $schemas);
+    }
+
+    protected function seoFromRow(?array $seoRow, array $schemas = []): array
+    {
+        if ($seoRow === null) {
+            return $schemas === [] ? [] : ['schemas' => $schemas];
+        }
+
+        return array_filter([
+            'title' => $seoRow['seo_title'] ?: null,
+            'description' => $seoRow['meta_description'] ?: null,
+            'keywords' => $seoRow['meta_keywords'] ?: null,
+            'canonical' => $seoRow['canonical_url'] ?: null,
+            'robots_index' => $seoRow['robots_index'] ?? null,
+            'robots_follow' => $seoRow['robots_follow'] ?? null,
+            'og_title' => $seoRow['og_title'] ?: null,
+            'og_description' => $seoRow['og_description'] ?: null,
+            'twitter_card' => $seoRow['twitter_card'] ?: null,
+            'schemas' => $schemas,
+        ], static fn ($value) => $value !== null && $value !== []);
     }
 }

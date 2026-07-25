@@ -4,12 +4,18 @@ declare(strict_types=1);
 
 namespace App\Controllers\Front;
 
+use App\Controllers\Front\Concerns\RendersFrontPage;
 use App\Core\Controller;
+use App\Core\Seo;
+use App\Core\View;
 use App\Models\Menu;
 use App\Models\Service;
+use App\Models\SeoMeta;
 
 final class ServiceController extends Controller
 {
+    use RendersFrontPage;
+
     public function index(): void
     {
         $this->view('front.services.index', [
@@ -17,6 +23,12 @@ final class ServiceController extends Controller
             'services' => Service::published(),
             'headerMenu' => Menu::itemsForLocation('header'),
             'footerMenu' => Menu::itemsForLocation('footer'),
+            'seo' => $this->seoFromRow(null, [
+                Seo::breadcrumbSchema([
+                    ['name' => 'Home', 'url' => View::url('/')],
+                    ['name' => 'Services', 'url' => View::url('services')],
+                ]),
+            ]),
         ], 'front.layouts.main');
     }
 
@@ -25,11 +37,19 @@ final class ServiceController extends Controller
         $service = Service::findBySlug($slug);
 
         if ($service === null) {
-            http_response_code(404);
-            $this->view('front.errors.404', ['pageTitle' => 'Service Not Found'], 'front.layouts.main');
+            $this->notFoundOr404View('/services/' . $slug, 'Service Not Found');
 
             return;
         }
+
+        $seoRow = SeoMeta::forEntity('service', (int) $service['id']);
+        $schemas = [
+            Seo::breadcrumbSchema([
+                ['name' => 'Home', 'url' => View::url('/')],
+                ['name' => 'Services', 'url' => View::url('services')],
+                ['name' => $service['title'], 'url' => View::url('services/' . $service['slug'])],
+            ]),
+        ];
 
         $this->view('front.services.show', [
             'pageTitle' => $service['title'],
@@ -38,6 +58,7 @@ final class ServiceController extends Controller
             'otherServices' => array_slice(array_filter(Service::published(), static fn ($s) => $s['id'] !== $service['id']), 0, 3),
             'headerMenu' => Menu::itemsForLocation('header'),
             'footerMenu' => Menu::itemsForLocation('footer'),
+            'seo' => $this->seoFromRow($seoRow, $schemas),
         ], 'front.layouts.main');
     }
 }

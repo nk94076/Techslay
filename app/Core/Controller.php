@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Core;
 
+use App\Models\Redirect;
+
 abstract class Controller
 {
     protected function view(string $view, array $data = [], ?string $layout = null): void
@@ -36,6 +38,27 @@ abstract class Controller
         http_response_code($status);
         echo $message !== '' ? $message : 'Error ' . $status;
         exit;
+    }
+
+    /**
+     * Call this from a "not found" branch instead of rendering the 404 view
+     * directly — it checks the admin-managed redirects table first, since
+     * the catch-all /{slug} front route means Router::dispatch() never sees
+     * these paths as genuinely unmatched.
+     */
+    protected function notFoundOr404View(string $requestPath, string $pageTitle = 'Page Not Found'): void
+    {
+        $redirect = Redirect::findByPath($requestPath);
+
+        if ($redirect !== null) {
+            Redirect::recordHit((int) $redirect['id']);
+            $this->redirect(ltrim($redirect['to_path'], '/'), (int) $redirect['status_code']);
+
+            return;
+        }
+
+        http_response_code(404);
+        $this->view('front.errors.404', ['pageTitle' => $pageTitle], 'front.layouts.main');
     }
 
     protected function input(string $key, mixed $default = null): mixed

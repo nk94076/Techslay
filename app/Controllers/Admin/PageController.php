@@ -10,6 +10,7 @@ use App\Core\Session;
 use App\Models\ActivityLog;
 use App\Models\Page;
 use App\Models\PageSection;
+use App\Models\SeoMeta;
 
 final class PageController extends Controller
 {
@@ -76,6 +77,7 @@ final class PageController extends Controller
             'pageHeading' => 'Edit Page — ' . $page['title'],
             'page' => $page,
             'sections' => PageSection::forPageAdmin($id),
+            'seo' => SeoMeta::forEntity('page', $id),
         ], 'admin.layouts.app');
     }
 
@@ -111,6 +113,7 @@ final class PageController extends Controller
             'published_at' => $status === 'published' ? ($page['published_at'] ?? date('Y-m-d H:i:s')) : $page['published_at'],
         ]);
 
+        SeoMeta::upsertFromRequest('page', $id);
         ActivityLog::record('page.update', 'page', $id, $title);
 
         Session::flash('success', 'Page updated.');

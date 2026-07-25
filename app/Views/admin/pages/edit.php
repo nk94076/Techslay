@@ -5,6 +5,7 @@ use App\Core\View;
 
 /** @var array $page */
 /** @var array $sections */
+/** @var array|null $seo */
 
 $knownTypes = [
     'hero', 'trusted_by', 'statistics', 'services_grid', 'campaign_types', 'why_choose_us',
@@ -35,6 +36,9 @@ $knownTypes = [
         </div>
         <div class="flex items-end">
           <button type="submit" class="w-full rounded-lg bg-slate-900 text-white text-sm font-semibold py-2.5">Save Page Details</button>
+        </div>
+        <div class="sm:col-span-2">
+          <?php View::partial('admin.partials._seo_fields', ['seo' => $seo]); ?>
         </div>
       </form>
     </div>

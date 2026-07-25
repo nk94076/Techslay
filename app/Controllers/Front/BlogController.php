@@ -4,12 +4,18 @@ declare(strict_types=1);
 
 namespace App\Controllers\Front;
 
+use App\Controllers\Front\Concerns\RendersFrontPage;
 use App\Core\Controller;
 use App\Core\Database;
+use App\Core\Seo;
+use App\Core\View;
 use App\Models\Menu;
+use App\Models\SeoMeta;
 
 final class BlogController extends Controller
 {
+    use RendersFrontPage;
+
     private const PER_PAGE = 9;
 
     public function index(): void
@@ -51,6 +57,12 @@ final class BlogController extends Controller
             'lastPage' => (int) max(1, ceil($total / self::PER_PAGE)),
             'headerMenu' => Menu::itemsForLocation('header'),
             'footerMenu' => Menu::itemsForLocation('footer'),
+            'seo' => $this->seoFromRow(null, [
+                Seo::breadcrumbSchema([
+                    ['name' => 'Home', 'url' => View::url('/')],
+                    ['name' => 'Blog', 'url' => View::url('blog')],
+                ]),
+            ]),
         ], 'front.layouts.main');
     }
 
@@ -66,8 +78,7 @@ final class BlogController extends Controller
         );
 
         if ($post === null) {
-            http_response_code(404);
-            $this->view('front.errors.404', ['pageTitle' => 'Post Not Found'], 'front.layouts.main');
+            $this->notFoundOr404View('/blog/' . $slug, 'Post Not Found');
 
             return;
         }
@@ -89,6 +100,16 @@ final class BlogController extends Controller
             ['id' => $post['id']]
         );
 
+        $seoRow = SeoMeta::forEntity('blog_post', (int) $post['id']);
+        $schemas = [
+            Seo::articleSchema($post),
+            Seo::breadcrumbSchema([
+                ['name' => 'Home', 'url' => View::url('/')],
+                ['name' => 'Blog', 'url' => View::url('blog')],
+                ['name' => $post['title'], 'url' => View::url('blog/' . $post['slug'])],
+            ]),
+        ];
+
         $this->view('front.blog.show', [
             'pageTitle' => $post['title'],
             'metaDescription' => $post['excerpt'],
@@ -98,6 +119,7 @@ final class BlogController extends Controller
             'tags' => $tags,
             'headerMenu' => Menu::itemsForLocation('header'),
             'footerMenu' => Menu::itemsForLocation('footer'),
+            'seo' => $this->seoFromRow($seoRow, $schemas),
         ], 'front.layouts.main');
     }
 }

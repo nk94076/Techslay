@@ -6,6 +6,7 @@ use App\Core\View;
 /** @var array $categories */
 /** @var array $authors */
 /** @var array $postTags */
+/** @var array|null $seo */
 
 $isEdit = $post !== null;
 $action = $isEdit ? View::url('admin/blog/' . $post['id']) : View::url('admin/blog');
@@ -32,6 +33,8 @@ $action = $isEdit ? View::url('admin/blog/' . $post['id']) : View::url('admin/bl
       <textarea name="content" rows="18" required
                 class="w-full rounded-lg border border-slate-200 px-4 py-3 text-sm font-mono"><?= View::e($post['content'] ?? '') ?></textarea>
     </div>
+
+    <?php View::partial('admin.partials._seo_fields', ['seo' => $seo]); ?>
   </div>
 
   <div class="space-y-6">

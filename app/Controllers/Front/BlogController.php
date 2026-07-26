@@ -69,7 +69,9 @@ final class BlogController extends Controller
     public function show(string $slug): void
     {
         $post = Database::fetchOne(
-            "SELECT p.*, c.name AS category_name, c.slug AS category_slug, a.name AS author_name, a.bio AS author_bio
+            "SELECT p.*, c.name AS category_name, c.slug AS category_slug,
+                    a.name AS author_name, a.bio AS author_bio, a.job_title AS author_job_title,
+                    a.linkedin_url AS author_linkedin, a.twitter_url AS author_twitter
              FROM blog_posts p
              LEFT JOIN blog_categories c ON c.id = p.category_id
              LEFT JOIN authors a ON a.id = p.author_id
@@ -86,8 +88,9 @@ final class BlogController extends Controller
         Database::query('UPDATE blog_posts SET views = views + 1 WHERE id = :id', ['id' => $post['id']]);
 
         $related = Database::fetchAll(
-            'SELECT p.* FROM blog_posts p
+            'SELECT p.*, c.name AS category_name FROM blog_posts p
              JOIN blog_related_posts r ON r.related_post_id = p.id
+             LEFT JOIN blog_categories c ON c.id = p.category_id
              WHERE r.blog_post_id = :id AND p.status = "published"
              LIMIT 3',
             ['id' => $post['id']]

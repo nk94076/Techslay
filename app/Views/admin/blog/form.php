@@ -22,6 +22,16 @@ $action = $isEdit ? View::url('admin/blog/' . $post['id']) : View::url('admin/bl
              class="w-full rounded-lg border border-slate-200 px-4 py-2 text-sm">
       <textarea name="excerpt" placeholder="Short excerpt (used in listings and meta description)" rows="2"
                 class="w-full rounded-lg border border-slate-200 px-4 py-2 text-sm"><?= View::e($post['excerpt'] ?? '') ?></textarea>
+      <div>
+        <label class="block text-xs font-medium text-slate-600 mb-1">Featured Image</label>
+        <div class="flex items-center gap-2">
+          <input type="text" id="featured-image-input" name="featured_image" placeholder="No image selected"
+                 value="<?= View::e($post['featured_image'] ?? '') ?>"
+                 class="flex-1 rounded-lg border border-slate-200 px-3 py-2 text-sm">
+          <button type="button" onclick="openMediaPicker((path) => { document.getElementById('featured-image-input').value = path; })"
+                  class="shrink-0 rounded-lg border border-slate-200 px-3 py-2 text-xs font-medium text-slate-600 hover:bg-slate-50">Browse&hellip;</button>
+        </div>
+      </div>
     </div>
 
     <div class="rounded-2xl bg-white border border-slate-100 shadow-sm p-6">

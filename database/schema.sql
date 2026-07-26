@@ -274,6 +274,7 @@ CREATE TABLE blog_posts (
     category_id INT UNSIGNED DEFAULT NULL,
     author_id INT UNSIGNED DEFAULT NULL,
     featured_image_id INT UNSIGNED DEFAULT NULL,
+    featured_image VARCHAR(500) DEFAULT NULL COMMENT 'Public path, set via the Media Picker (same convention as every other CMS image field)',
     title VARCHAR(255) NOT NULL,
     slug VARCHAR(255) NOT NULL UNIQUE,
     excerpt VARCHAR(500) DEFAULT NULL,

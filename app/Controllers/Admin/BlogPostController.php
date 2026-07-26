@@ -140,6 +140,7 @@ final class BlogPostController extends Controller
             'title' => $title,
             'slug' => $slug,
             'excerpt' => trim((string) $this->input('excerpt', '')),
+            'featured_image' => trim((string) $this->input('featured_image', '')) ?: null,
             'content' => $content,
             'table_of_contents' => json_encode($tableOfContents, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE),
             'reading_time_minutes' => $readingTime,

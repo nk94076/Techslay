@@ -119,6 +119,7 @@ final class BlogPostController extends Controller
             return;
         }
 
+        $content = $this->injectHeadingIds($content);
         $wordCount = str_word_count(strip_tags($content));
         $readingTime = max(1, (int) ceil($wordCount / 200));
         $tableOfContents = $this->extractToc($content);
@@ -178,6 +179,43 @@ final class BlogPostController extends Controller
     }
 
     /** Pulls <h2>/<h3> headings with id attributes out of the content HTML to build a simple TOC. */
+    /**
+     * The WYSIWYG editor has no way for an admin to type id="..." onto a
+     * heading by hand, so auto-slugify every <h2>/<h3> that doesn't already
+     * have one — extractToc() (and the front-end anchor links it powers)
+     * depends entirely on that id attribute being present.
+     */
+    private function injectHeadingIds(string $content): string
+    {
+        $seen = [];
+
+        return (string) preg_replace_callback(
+            '/<h([23])([^>]*)>(.*?)<\/h\1>/is',
+            static function (array $m) use (&$seen): string {
+                [, $level, $attrs, $inner] = $m;
+
+                if (preg_match('/\bid\s*=/i', $attrs)) {
+                    return $m[0];
+                }
+
+                $slug = strtolower(trim((string) preg_replace('/[^a-z0-9]+/i', '-', strip_tags($inner)), '-'));
+                $slug = $slug !== '' ? $slug : 'section';
+
+                $base = $slug;
+                $i = 2;
+
+                while (isset($seen[$slug])) {
+                    $slug = $base . '-' . $i++;
+                }
+
+                $seen[$slug] = true;
+
+                return "<h{$level}{$attrs} id=\"{$slug}\">{$inner}</h{$level}>";
+            },
+            $content
+        );
+    }
+
     private function extractToc(string $content): array
     {
         if (!preg_match_all('/<h([23])[^>]*id="([^"]+)"[^>]*>(.*?)<\/h\1>/i', $content, $matches, PREG_SET_ORDER)) {

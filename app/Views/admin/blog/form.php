@@ -25,13 +25,12 @@ $action = $isEdit ? View::url('admin/blog/' . $post['id']) : View::url('admin/bl
     </div>
 
     <div class="rounded-2xl bg-white border border-slate-100 shadow-sm p-6">
-      <label class="block text-sm font-medium text-slate-700 mb-2">Content (HTML)</label>
-      <p class="text-xs text-slate-400 mb-2">
-        Full HTML is supported — code blocks (<code>&lt;pre&gt;&lt;code&gt;</code>), internal/external links, etc.
-        Add <code>id="..."</code> to any <code>&lt;h2&gt;</code>/<code>&lt;h3&gt;</code> to have it appear in the auto-generated table of contents.
+      <label class="block text-sm font-medium text-slate-700 mb-2">Content</label>
+      <p class="text-xs text-slate-400 mb-3">
+        Use Heading 2/3 for section headings — they automatically appear in the post's table of contents.
       </p>
-      <textarea name="content" rows="18" required
-                class="w-full rounded-lg border border-slate-200 px-4 py-3 text-sm font-mono"><?= View::e($post['content'] ?? '') ?></textarea>
+      <div id="content-editor" style="min-height: 400px;"></div>
+      <textarea name="content" id="content-raw" required class="hidden"><?= View::e($post['content'] ?? '') ?></textarea>
     </div>
 
     <?php View::partial('admin.partials._seo_fields', ['seo' => $seo]); ?>
@@ -88,4 +87,45 @@ $action = $isEdit ? View::url('admin/blog/' . $post['id']) : View::url('admin/bl
 document.getElementById('post-status').addEventListener('change', function () {
   document.getElementById('scheduled-at-field').classList.toggle('hidden', this.value !== 'scheduled');
 });
+</script>
+
+<link rel="stylesheet" href="<?= View::e(View::asset('vendor/quill/quill.snow.css')) ?>">
+<script src="<?= View::e(View::asset('vendor/quill/quill.min.js')) ?>"></script>
+<script>
+(function () {
+  var rawField = document.getElementById('content-raw');
+
+  var quill = new Quill('#content-editor', {
+    theme: 'snow',
+    modules: {
+      toolbar: {
+        container: [
+          [{ header: [2, 3, false] }],
+          ['bold', 'italic', 'underline', 'strike'],
+          ['blockquote', 'code-block'],
+          [{ list: 'ordered' }, { list: 'bullet' }],
+          ['link', 'image'],
+          ['clean'],
+        ],
+        handlers: {
+          image: function () {
+            var range = quill.getSelection(true);
+            openMediaPicker(function (path) {
+              quill.insertEmbed(range.index, 'image', path, 'user');
+              quill.setSelection(range.index + 1);
+            });
+          },
+        },
+      },
+    },
+  });
+
+  if (rawField.value) {
+    quill.clipboard.dangerouslyPasteHTML(rawField.value);
+  }
+
+  document.querySelector('form').addEventListener('submit', function () {
+    rawField.value = quill.root.innerHTML;
+  });
+})();
 </script>

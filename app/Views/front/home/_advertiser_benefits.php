@@ -23,8 +23,22 @@ $items = $content['items'] ?? [];
       <?php endforeach; ?>
     </div>
     <div class="order-1 lg:order-2">
+      <span class="inline-block rounded-full bg-white border border-brand-100 px-4 py-1.5 text-xs font-semibold text-brand-600 shadow-sm mb-5">For Advertisers</span>
       <h2 class="text-3xl md:text-4xl font-extrabold text-slate-900"><?= View::e($content['title'] ?? '') ?></h2>
       <a href="<?= View::url('advertisers') ?>" class="mt-6 inline-flex items-center rounded-full bg-gradient-to-r from-brand-500 to-accent-500 text-white text-sm font-semibold px-6 py-3 shadow-lg shadow-brand-500/30 hover:shadow-xl transition">Become an Advertiser</a>
+
+      <div class="mt-10 relative max-w-xs">
+        <div class="absolute -inset-4 bg-gradient-to-br from-accent-200/40 to-brand-200/30 blur-2xl rounded-full"></div>
+        <div class="relative rounded-2xl bg-white border border-slate-100 shadow-lg p-5 flex items-center gap-4">
+          <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-brand-500 to-accent-500 text-white flex items-center justify-center shadow-lg shadow-brand-500/30 flex-shrink-0">
+            <?= Icon::render('shield-check', 'w-6 h-6') ?>
+          </div>
+          <div>
+            <div class="text-2xl font-extrabold text-slate-900"><?= View::e($content['highlight_value'] ?? '10B+') ?></div>
+            <div class="text-xs text-slate-500"><?= View::e($content['highlight_label'] ?? 'Verified conversions tracked') ?></div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>

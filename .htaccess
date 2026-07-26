@@ -1,0 +1,19 @@
+# Some hosts (e.g. Hostinger's "Deploy from GitHub" app platform) always
+# serve from the repository root rather than a configurable public/
+# directory. This transparently routes every request through public/,
+# which holds the real front controller — the app source (app/, config/,
+# database/, routes/, .env) stays out of the served path either way,
+# since none of it exists under public/ and requests for it 404 through
+# the front controller instead of exposing the real files.
+RewriteEngine On
+
+# This deploy layout puts the whole repo (including .git) inside the web
+# root, so block it outright rather than relying on the rewrite below.
+RewriteRule ^\.git - [F,L]
+
+RewriteCond %{REQUEST_URI} !^/public/
+RewriteRule ^(.*)$ public/$1 [L]
+
+<FilesMatch "^\.">
+  Require all denied
+</FilesMatch>

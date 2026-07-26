@@ -6,6 +6,7 @@ namespace App\Controllers\Admin;
 
 use App\Core\Controller;
 use App\Core\Database;
+use App\Core\Icon;
 use App\Core\Session;
 use App\Models\ActivityLog;
 use App\Models\Page;
@@ -78,6 +79,7 @@ final class PageController extends Controller
             'page' => $page,
             'sections' => PageSection::forPageAdmin($id),
             'seo' => SeoMeta::forEntity('page', $id),
+            'iconKeys' => Icon::keys(),
         ], 'admin.layouts.app');
     }
 

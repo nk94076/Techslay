@@ -61,6 +61,13 @@ SELECT id, 'hero', JSON_OBJECT(
 ), 1, 'published' FROM pages WHERE slug = 'publishers';
 
 INSERT INTO page_sections (page_id, component_type, content, sort_order, status)
+SELECT id, 'content_block', JSON_OBJECT(
+    'title', 'A Network Built Around Publisher Trust',
+    'align', 'left',
+    'body', 'Most publishers have been burned by a network at least once — a payout that arrived late, a commission that got clawed back after the fact, or an account manager who disappeared after onboarding. Techslay was built to fix the parts of that relationship that are actually broken, not just to add another offer wall.\n\nEvery offer on the network comes from an advertiser we have a direct relationship with, so the commission terms you see are the terms you get paid — no surprise clawbacks after a campaign has already run. Sub-ID level tracking means you can see exactly which traffic sources and creatives are converting, down to the individual placement, so scaling what works is a data decision rather than a guess.\n\nWe work across CPS, CPL and CPI offers spanning ecommerce, education, travel, healthcare, subscription apps, food delivery, SaaS, retail, fashion, beauty and electronics, which means a publisher with diversified traffic does not need five different network relationships to monetize it. One dashboard, one payout schedule, one account manager who actually knows your traffic mix.'
+), 2, 'published' FROM pages WHERE slug = 'publishers';
+
+INSERT INTO page_sections (page_id, component_type, content, sort_order, status)
 SELECT id, 'publisher_benefits', JSON_OBJECT(
     'title', 'Why Publish With Techslay',
     'items', JSON_ARRAY(
@@ -69,7 +76,7 @@ SELECT id, 'publisher_benefits', JSON_OBJECT(
         JSON_OBJECT('icon', 'users', 'title', 'Dedicated Support', 'description', 'A dedicated account manager to help you scale faster.'),
         JSON_OBJECT('icon', 'chart-bar', 'title', 'Real-Time Reporting', 'description', 'Track clicks, conversions and earnings live from your dashboard.')
     )
-), 2, 'published' FROM pages WHERE slug = 'publishers';
+), 3, 'published' FROM pages WHERE slug = 'publishers';
 
 INSERT INTO page_sections (page_id, component_type, content, sort_order, status)
 SELECT id, 'how_it_works', JSON_OBJECT(
@@ -80,13 +87,13 @@ SELECT id, 'how_it_works', JSON_OBJECT(
         JSON_OBJECT('step', '03', 'title', 'Pick Offers', 'description', 'Choose from CPS, CPL and CPI campaigns that fit your traffic.'),
         JSON_OBJECT('step', '04', 'title', 'Get Paid', 'description', 'Track performance live and receive reliable, on-time payouts.')
     )
-), 3, 'published' FROM pages WHERE slug = 'publishers';
+), 4, 'published' FROM pages WHERE slug = 'publishers';
 
 INSERT INTO page_sections (page_id, component_type, content, sort_order, status)
-SELECT id, 'faq', JSON_OBJECT('title', 'Publisher FAQs', 'group', 'general'), 4, 'published' FROM pages WHERE slug = 'publishers';
+SELECT id, 'faq', JSON_OBJECT('title', 'Publisher FAQs', 'group', 'general'), 5, 'published' FROM pages WHERE slug = 'publishers';
 
 INSERT INTO page_sections (page_id, component_type, content, sort_order, status)
-SELECT id, 'contact_cta', JSON_OBJECT('title', 'Ready to Start Earning?', 'button_text', 'Apply Now', 'button_url', '/contact'), 5, 'published' FROM pages WHERE slug = 'publishers';
+SELECT id, 'contact_cta', JSON_OBJECT('title', 'Ready to Start Earning?', 'button_text', 'Apply Now', 'button_url', '/contact'), 6, 'published' FROM pages WHERE slug = 'publishers';
 
 -- ---------------------------------------------------------------------
 -- Advertisers
@@ -103,6 +110,13 @@ SELECT id, 'hero', JSON_OBJECT(
 ), 1, 'published' FROM pages WHERE slug = 'advertisers';
 
 INSERT INTO page_sections (page_id, component_type, content, sort_order, status)
+SELECT id, 'content_block', JSON_OBJECT(
+    'title', 'Pay For Outcomes, Not Impressions',
+    'align', 'left',
+    'body', 'Traditional advertising asks you to pay upfront and hope it converts. Performance marketing through Techslay flips that: you define what a successful outcome looks like — a completed sale, a qualified lead, a verified app install — and you only pay when that outcome actually happens.\n\nThat starts with tracking infrastructure, not a sales pitch. Every campaign runs on server-to-server postback tracking, which means conversions are attributed accurately even as browser-based tracking gets less reliable across the industry. Every conversion is also screened by our fraud detection engine before it is billed, so the numbers on your dashboard reflect real customer actions, not inflated traffic from bad actors.\n\nOn the publisher side, we only work with vetted partners who have a track record of quality traffic in your vertical — ecommerce, education, travel, healthcare, subscription apps, food delivery, SaaS, retail, fashion, beauty, and electronics. Your account manager helps structure commission tiers that fit your margins and recruits the specific publisher mix that fits your acquisition goals, rather than blasting your offer to the entire network indiscriminately.\n\nWhether you are replacing an underperforming acquisition channel or launching customer acquisition for the first time, the campaign is built around the outcome you are actually trying to buy — not around impressions that look good in a report and do nothing for revenue.'
+), 2, 'published' FROM pages WHERE slug = 'advertisers';
+
+INSERT INTO page_sections (page_id, component_type, content, sort_order, status)
 SELECT id, 'advertiser_benefits', JSON_OBJECT(
     'title', 'Why Advertise With Techslay',
     'items', JSON_ARRAY(
@@ -111,16 +125,16 @@ SELECT id, 'advertiser_benefits', JSON_OBJECT(
         JSON_OBJECT('icon', 'trending-up', 'title', 'Real-Time Optimization', 'description', 'Adjust budgets and targeting based on live campaign data.'),
         JSON_OBJECT('icon', 'shield-check', 'title', 'Fraud-Free Traffic', 'description', 'Every click and conversion is checked by our fraud detection engine.')
     )
-), 2, 'published' FROM pages WHERE slug = 'advertisers';
+), 3, 'published' FROM pages WHERE slug = 'advertisers';
 
 INSERT INTO page_sections (page_id, component_type, content, sort_order, status)
-SELECT id, 'case_studies_grid', JSON_OBJECT('title', 'Results That Speak for Themselves'), 3, 'published' FROM pages WHERE slug = 'advertisers';
+SELECT id, 'case_studies_grid', JSON_OBJECT('title', 'Results That Speak for Themselves'), 4, 'published' FROM pages WHERE slug = 'advertisers';
 
 INSERT INTO page_sections (page_id, component_type, content, sort_order, status)
-SELECT id, 'industries', JSON_OBJECT('title', 'Industries We Serve'), 4, 'published' FROM pages WHERE slug = 'advertisers';
+SELECT id, 'industries', JSON_OBJECT('title', 'Industries We Serve'), 5, 'published' FROM pages WHERE slug = 'advertisers';
 
 INSERT INTO page_sections (page_id, component_type, content, sort_order, status)
-SELECT id, 'contact_cta', JSON_OBJECT('title', 'Ready to Launch a Campaign?', 'button_text', 'Talk to Sales', 'button_url', '/contact'), 5, 'published' FROM pages WHERE slug = 'advertisers';
+SELECT id, 'contact_cta', JSON_OBJECT('title', 'Ready to Launch a Campaign?', 'button_text', 'Talk to Sales', 'button_url', '/contact'), 6, 'published' FROM pages WHERE slug = 'advertisers';
 
 -- ---------------------------------------------------------------------
 -- Technology

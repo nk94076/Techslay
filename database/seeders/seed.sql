@@ -204,6 +204,63 @@ INSERT INTO services (title, slug, icon, short_description, sort_order, status) 
 ('Creative Development', 'creative-development', 'sparkles', 'High-converting ad creatives tailored to each campaign.', 5, 'published'),
 ('Fraud Detection', 'fraud-detection', 'shield-check', 'Real-time traffic quality monitoring to protect your budget.', 6, 'published');
 
+-- Full service page body copy (services.content), written separately from the
+-- INSERT above since MySQL escaping for multi-paragraph text is clearer this way.
+UPDATE services SET content = 'Affiliate marketing is the engine behind Techslay: a performance-based partnership model where advertisers pay publishers only after a defined result actually happens — a sale, a qualified lead, or an app install. No result, no cost. That single principle is why performance marketing consistently outperforms traditional advertising on measurable ROI, and it''s the model our entire network is built around.
+
+Techslay runs full-funnel affiliate campaign management across three core pricing structures: Cost Per Sale (CPS) for ecommerce and subscription businesses, Cost Per Lead (CPL) for service businesses that need qualified inquiries, and Cost Per Install (CPI) for mobile and SaaS products that need verified installs and activations. Each model is matched to the advertiser''s actual business goal rather than forcing every campaign into a single format.
+
+Behind every campaign sits the infrastructure that makes affiliate marketing trustworthy at scale: server-to-server (S2S) postback tracking, sub-ID level reporting down to the individual publisher and creative, real-time dashboards for both sides of the network, and a fraud detection layer that screens every click and conversion before it''s billed. Advertisers get a finance team''s favorite kind of marketing spend — one that''s directly tied to revenue. Publishers get transparent attribution and payout terms they can actually plan around.
+
+Our account managers work hands-on with advertisers to structure commission tiers, set up tracking, and recruit the right publisher segments for their vertical — from content and coupon sites to social media influencers and email publishers. On the publisher side, we handle offer curation, creative assets, and compliance review so every campaign a publisher promotes is one they can stand behind.
+
+If you''re evaluating an affiliate network for the first time or replacing one that''s stopped delivering, this is the starting point: transparent tracking, fair attribution, and a team that treats your campaign like it''s the only one we run.' WHERE slug = 'affiliate-marketing';
+UPDATE services SET content = 'Techslay''s publisher network is built around one filter: quality traffic that converts, not just traffic that clicks. Every publisher who joins goes through a vetting process that checks traffic sources, historical conversion quality, and compliance history before they''re approved to run live campaigns — which is also why our advertisers trust the network''s volume instead of discounting it.
+
+The network spans content publishers, coupon and deal sites, comparison and review platforms, email marketers, social media and influencer publishers, and mobile app networks — giving advertisers reach across the channels their actual customers use, across ecommerce, education, travel, healthcare, subscription apps, food delivery, SaaS, retail, fashion, beauty, and electronics.
+
+For publishers, network access means more than an offer list. Every approved publisher gets a live dashboard with click, conversion, and earnings data down to the sub-ID, deep-linking support so traffic can land on any page of an advertiser''s site (not just a fixed landing page), and creative assets — banners, email swipe copy, product feeds — supplied directly by advertisers rather than scraped together independently. A dedicated account manager helps match publishers to offers that fit their actual audience instead of the highest-paying offer regardless of fit.
+
+Payout reliability is treated as a first-class feature, not an afterthought: publishers are paid on the schedule they''re promised, with transparent statements that reconcile against their own tracking, and support that responds to payment questions the same way it responds to technical ones.
+
+Whether you''re a publisher choosing where to send your next campaign or an advertiser evaluating who''s driving your funnel, the network is the same one either way — vetted, transparent, and built to keep the trust between advertiser and publisher intact.' WHERE slug = 'publisher-network';
+UPDATE services SET content = 'Performance marketing means paying for outcomes — sales, leads, installs, verified actions — instead of paying for impressions, clicks, or "reach" that never converts into revenue. Techslay was built specifically around this model because it aligns the incentives of everyone involved: advertisers only spend when they get a result, and publishers only get paid when they deliver one.
+
+For advertisers, this changes the math on marketing spend entirely. Instead of budgeting for a campaign and hoping it performs, a performance marketing budget scales with actual results — spend goes up because sales are coming in, not on a fixed schedule regardless of outcome. Our team helps structure commission rates and payout models around your margins, so growth through the network is growth you can defend to your finance team.
+
+Execution runs on real-time data. Campaigns are monitored continuously through live dashboards that show conversion rates, publisher-level performance, and spend efficiency as they happen — not in a report that arrives a week later. That visibility is what lets advertisers reallocate budget toward what''s working and pause what isn''t, mid-campaign rather than mid-quarter.
+
+Performance marketing through Techslay also means every conversion is verified before it''s billed. Our fraud detection engine checks click patterns, device fingerprints, and conversion timing against known abuse signatures, so "performance" actually means genuine customer actions — not inflated numbers from bad traffic.
+
+Whether you''re launching customer acquisition for the first time or migrating an existing program that''s underperforming, our team builds the campaign structure, tracking, and publisher mix around the specific outcome you''re trying to buy.' WHERE slug = 'performance-marketing';
+UPDATE services SET content = 'Every affiliate and performance marketing program lives or dies on tracking accuracy — if a sale, lead, or install can''t be attributed correctly to the publisher who drove it, nothing else about the program matters. Techslay''s tracking integration is built to remove that risk entirely, with server-to-server (S2S) postback tracking as the default rather than an add-on.
+
+S2S tracking means conversion data passes directly between your server and ours, without relying on a customer''s browser to fire a pixel that ad blockers, iOS privacy changes, or slow page loads can silently drop. That server-side handshake is what keeps attribution accurate even as browser-based tracking gets less reliable industry-wide.
+
+Integration is designed to fit into your existing stack rather than force a rebuild: our team supports standard postback URL setups, works with major ecommerce platforms and custom checkout flows, and provides sub-ID passthrough so every conversion can be traced back to the exact publisher, creative, and traffic source that generated it. For mobile advertisers, we integrate with leading mobile measurement partners (MMPs) to track installs and in-app events with the same accuracy.
+
+Once integration is live, both sides of the network get real-time visibility: advertisers see conversions as they''re verified, and publishers see their earnings update the same way, instead of waiting on a manual reconciliation at the end of the month. Our technical team handles the setup process directly rather than leaving it to documentation — most integrations are live within days, not weeks.
+
+Accurate tracking is the foundation everything else in performance marketing is built on. We treat it that way.' WHERE slug = 'tracking-integration';
+UPDATE services SET content = 'An offer is only as strong as the creative assets publishers have to promote it. Techslay''s creative development team works directly with advertisers to build the banners, landing pages, email copy, and product feeds that publishers actually use to drive conversions — because a technically perfect tracking setup still needs creative that converts.
+
+We start by reviewing what''s already converting for an advertiser (or, for new advertisers, what''s converting in comparable campaigns across the network) and build creative variations sized and formatted for the channels where your publishers are actually active: display banners in standard IAB sizes, native ad formats for content publishers, email swipe files for email marketers, and product data feeds for comparison and deal sites.
+
+For CPL and CPI campaigns specifically, landing page quality has an outsized effect on conversion rate — so our team can build or optimize dedicated landing pages designed around a single, clear call to action, tested against your existing pages where a baseline exists.
+
+Every creative asset goes through the same compliance review the rest of the network runs on: accurate claims, correct disclosures, and brand guideline adherence, so what a publisher promotes matches what your business actually delivers. That consistency protects advertiser brand reputation and keeps publisher trust intact — both of which compound in a network''s favor over time.
+
+Creative isn''t a one-time deliverable in our process. As campaigns run, we monitor which creative variations are converting best across the network and iterate, so the assets your publishers are using keep improving instead of going stale.' WHERE slug = 'creative-development';
+UPDATE services SET content = 'Affiliate fraud — fake leads, bot-driven clicks, cookie stuffing, incentivized traffic disguised as organic — is the single biggest reason advertisers lose trust in performance marketing. Techslay''s fraud detection engine exists to make sure that never happens on campaigns running through our network, by screening every click and conversion before it''s ever billed to an advertiser.
+
+Detection runs on multiple layers simultaneously: click pattern analysis flags abnormal frequency or timing from a single source, device and IP fingerprinting catches repeat abuse from the same actor across different accounts, and conversion timing analysis flags leads or sales that complete implausibly fast to be genuine. Suspicious activity is held and reviewed rather than silently billed and refunded later — advertisers only pay for actions that pass verification in the first place.
+
+This protection runs on both sides of the network. Advertisers get traffic quality guarantees that mean the leads and sales they''re paying for are real, not padded. Publishers running legitimate campaigns benefit too, because a network with a reputation for clean traffic attracts advertisers willing to pay competitive rates and trust the network with larger budgets — bad actors polluting a network''s traffic quality hurt every honest publisher''s earning potential along with it.
+
+Every publisher joining the network goes through an initial vetting review, and traffic quality is monitored continuously afterward, not just at onboarding. Publishers found running fraudulent traffic are removed from the network, which keeps the overall trust level — and the payout rates advertisers are willing to offer — higher for everyone who plays it straight.
+
+If fraud is the reason you''ve soured on affiliate marketing before, this is the part of our infrastructure built specifically to fix that.' WHERE slug = 'fraud-detection';
+
 INSERT INTO industries (title, slug, icon, description, sort_order, status) VALUES
 ('Ecommerce', 'ecommerce', 'shopping-bag', 'Drive qualified purchases with performance-based campaigns.', 1, 'published'),
 ('Education', 'education', 'academic-cap', 'Generate quality leads for course and program enrollments.', 2, 'published'),

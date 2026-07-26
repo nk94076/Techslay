@@ -41,6 +41,15 @@ final class Icon
         'sparkles' => '<path d="M12 3l1.2 3.8L17 8l-3.8 1.2L12 13l-1.2-3.8L7 8l3.8-1.2L12 3z"/><path d="M19 14l.6 1.9L21.5 16.5l-1.9.6L19 19l-.6-1.9-1.9-.6 1.9-.6L19 14z"/>',
         'tv' => '<rect x="3" y="5" width="18" height="12" rx="2"/><path d="M9 20h6"/>',
         'building-office' => '<rect x="4" y="4" width="16" height="16" rx="1"/><path d="M8 8h1.5M8 12h1.5M8 16h1.5M14.5 8H16M14.5 12H16M14.5 16H16"/>',
+        'squares' => '<rect x="3.5" y="3.5" width="7" height="7" rx="1.2"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.2"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.2"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.2"/>',
+        'document' => '<path d="M7 3.5h7l4 4v13h-11v-17z"/><path d="M14 3.5v4h4"/><path d="M9.5 13h5M9.5 16.5h5"/>',
+        'photo' => '<rect x="3.5" y="4.5" width="17" height="15" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="M4 17l5-5 3.5 3.5L16 12l4 4"/>',
+        'link' => '<path d="M9.5 14.5l5-5"/><path d="M11 6.5l1.4-1.4a4 4 0 015.5 5.7L16.5 12.2"/><path d="M13 17.5l-1.4 1.4a4 4 0 01-5.5-5.7L7.5 11.8"/>',
+        'pencil-square' => '<path d="M4 20l1-4.5L15.5 5 19 8.5 8.5 19 4 20z"/><path d="M13.5 6.5L17.5 10.5"/>',
+        'envelope' => '<rect x="3.5" y="5.5" width="17" height="13" rx="2"/><path d="M4 6.5l8 6.5 8-6.5"/>',
+        'arrow-path' => '<path d="M4.5 12a7.5 7.5 0 0113-5M4.5 12a7.5 7.5 0 0013 5"/><path d="M17 3.5v3.5h-3.5M7 20.5V17h3.5"/>',
+        'magnifying-glass' => '<circle cx="10.5" cy="10.5" r="6.5"/><path d="M19.5 19.5l-4.5-4.5"/>',
+        'question-mark-circle' => '<circle cx="12" cy="12" r="8.5"/><path d="M9.5 9.3a2.5 2.5 0 014.9.7c0 1.7-2.4 1.7-2.4 3.5"/><circle cx="12" cy="16.3" r="0.15" fill="currentColor"/>',
     ];
 
     private const DEFAULT_KEY = 'star';

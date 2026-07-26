@@ -38,6 +38,16 @@
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-heading);
   }
+
+  /* Row hover for every admin list table (Pages, Media, Leads, etc.) without
+     needing a class added to each one individually. */
+  main table tbody tr {
+    transition: background-color 0.12s ease;
+  }
+
+  main table tbody tr:hover {
+    background-color: rgb(248 250 252);
+  }
 }
 
 @layer utilities {

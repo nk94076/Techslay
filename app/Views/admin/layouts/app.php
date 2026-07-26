@@ -1,6 +1,7 @@
 <?php
 
 use App\Core\Auth;
+use App\Core\Icon;
 use App\Core\Session;
 use App\Core\View;
 use App\Models\Setting;
@@ -11,23 +12,23 @@ $pageTitle = ($pageTitle ?? 'Dashboard') . ' | ' . $adminSiteName . ' Admin';
 $currentUser = Auth::user();
 
 $navItems = [
-    ['label' => 'Dashboard', 'url' => 'admin/dashboard', 'icon' => '&#9632;'],
-    ['label' => 'Pages', 'url' => 'admin/pages', 'icon' => '&#9776;'],
-    ['label' => 'Media', 'url' => 'admin/media', 'icon' => '&#128247;'],
-    ['label' => 'Menus', 'url' => 'admin/menus', 'icon' => '&#128279;'],
-    ['label' => 'Blog', 'url' => 'admin/blog', 'icon' => '&#128221;'],
-    ['label' => 'Services', 'url' => 'admin/services', 'icon' => '&#9881;'],
-    ['label' => 'Industries', 'url' => 'admin/industries', 'icon' => '&#127970;'],
-    ['label' => 'Case Studies', 'url' => 'admin/case-studies', 'icon' => '&#128202;'],
-    ['label' => 'Testimonials', 'url' => 'admin/testimonials', 'icon' => '&#128172;'],
-    ['label' => 'FAQs', 'url' => 'admin/faqs', 'icon' => '&#10067;'],
-    ['label' => 'Statistics', 'url' => 'admin/statistics', 'icon' => '&#128200;'],
-    ['label' => 'Leads', 'url' => 'admin/leads', 'icon' => '&#128231;'],
-    ['label' => 'Redirects', 'url' => 'admin/redirects', 'icon' => '&#128257;'],
-    ['label' => 'SEO Settings', 'url' => 'admin/settings/seo', 'icon' => '&#128269;'],
-    ['label' => 'Users', 'url' => 'admin/users', 'icon' => '&#128100;'],
-    ['label' => 'Roles', 'url' => 'admin/roles', 'icon' => '&#128274;'],
-    ['label' => 'Settings', 'url' => 'admin/settings', 'icon' => '&#9881;'],
+    ['label' => 'Dashboard', 'url' => 'admin/dashboard', 'icon' => 'squares'],
+    ['label' => 'Pages', 'url' => 'admin/pages', 'icon' => 'document'],
+    ['label' => 'Media', 'url' => 'admin/media', 'icon' => 'photo'],
+    ['label' => 'Menus', 'url' => 'admin/menus', 'icon' => 'link'],
+    ['label' => 'Blog', 'url' => 'admin/blog', 'icon' => 'pencil-square'],
+    ['label' => 'Services', 'url' => 'admin/services', 'icon' => 'briefcase'],
+    ['label' => 'Industries', 'url' => 'admin/industries', 'icon' => 'building-office'],
+    ['label' => 'Case Studies', 'url' => 'admin/case-studies', 'icon' => 'chart-bar'],
+    ['label' => 'Testimonials', 'url' => 'admin/testimonials', 'icon' => 'chat-bubble'],
+    ['label' => 'FAQs', 'url' => 'admin/faqs', 'icon' => 'question-mark-circle'],
+    ['label' => 'Statistics', 'url' => 'admin/statistics', 'icon' => 'trending-up'],
+    ['label' => 'Leads', 'url' => 'admin/leads', 'icon' => 'envelope'],
+    ['label' => 'Redirects', 'url' => 'admin/redirects', 'icon' => 'arrow-path'],
+    ['label' => 'SEO Settings', 'url' => 'admin/settings/seo', 'icon' => 'magnifying-glass'],
+    ['label' => 'Users', 'url' => 'admin/users', 'icon' => 'users'],
+    ['label' => 'Roles', 'url' => 'admin/roles', 'icon' => 'lock-closed'],
+    ['label' => 'Settings', 'url' => 'admin/settings', 'icon' => 'cog'],
 ];
 
 $currentPath = trim($_SERVER['REQUEST_URI'] ?? '', '/');
@@ -54,8 +55,8 @@ $currentPath = trim($_SERVER['REQUEST_URI'] ?? '', '/');
       <?php foreach ($navItems as $item): ?>
         <?php $active = str_starts_with($currentPath, $item['url']); ?>
         <a href="<?= View::url($item['url']) ?>"
-           class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition <?= $active ? 'bg-gradient-to-r from-brand-600 to-accent-600 text-white' : 'hover:bg-white/5 text-slate-300' ?>">
-          <span class="w-5 text-center"><?= $item['icon'] ?></span>
+           class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors duration-150 <?= $active ? 'bg-gradient-to-r from-brand-600 to-accent-600 text-white shadow-lg shadow-brand-900/30' : 'hover:bg-white/5 text-slate-300' ?>">
+          <span class="w-5 flex-shrink-0"><?= Icon::render($item['icon'], 'w-5 h-5') ?></span>
           <span><?= View::e($item['label']) ?></span>
         </a>
       <?php endforeach; ?>

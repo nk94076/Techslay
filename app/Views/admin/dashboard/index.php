@@ -1,5 +1,6 @@
 <?php
 
+use App\Core\Icon;
 use App\Core\View;
 
 /** @var array $stats */
@@ -7,15 +8,18 @@ use App\Core\View;
 /** @var array $recentActivity */
 
 $cards = [
-    ['label' => 'New Leads', 'value' => $stats['leads'], 'url' => 'admin/leads'],
-    ['label' => 'Blog Posts', 'value' => $stats['blog_posts'], 'url' => 'admin/blog'],
-    ['label' => 'Media Files', 'value' => $stats['media'], 'url' => 'admin/media'],
-    ['label' => 'Admin Users', 'value' => $stats['users'], 'url' => 'admin/users'],
+    ['label' => 'New Leads', 'value' => $stats['leads'], 'url' => 'admin/leads', 'icon' => 'envelope'],
+    ['label' => 'Blog Posts', 'value' => $stats['blog_posts'], 'url' => 'admin/blog', 'icon' => 'pencil-square'],
+    ['label' => 'Media Files', 'value' => $stats['media'], 'url' => 'admin/media', 'icon' => 'photo'],
+    ['label' => 'Admin Users', 'value' => $stats['users'], 'url' => 'admin/users', 'icon' => 'users'],
 ];
 ?>
 <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
   <?php foreach ($cards as $card): ?>
-    <a href="<?= View::url($card['url']) ?>" class="rounded-2xl bg-white border border-slate-100 shadow-sm hover:shadow-md transition p-6">
+    <a href="<?= View::url($card['url']) ?>" class="group rounded-2xl bg-white border border-slate-100 shadow-sm hover:shadow-lg hover:-translate-y-1 hover:border-brand-200 transition-all duration-200 p-6">
+      <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-brand-500 to-accent-500 text-white flex items-center justify-center mb-4 shadow-lg shadow-brand-500/20 group-hover:scale-110 transition-transform duration-200">
+        <?= Icon::render($card['icon'], 'w-5 h-5') ?>
+      </div>
       <div class="text-3xl font-extrabold text-slate-900"><?= (int) $card['value'] ?></div>
       <div class="mt-1 text-sm text-slate-500"><?= View::e($card['label']) ?></div>
     </a>
@@ -57,8 +61,4 @@ $cards = [
       </div>
     <?php endif; ?>
   </div>
-</div>
-
-<div class="mt-8 rounded-2xl border border-dashed border-slate-200 bg-slate-50/50 p-6 text-sm text-slate-500">
-  This dashboard is a live skeleton on the real schema. Content CRUD modules (Pages, Media, Blog, Services, Leads, SEO, Settings) are built out in Phase 2 of this project.
 </div>

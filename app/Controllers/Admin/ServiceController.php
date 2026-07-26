@@ -88,8 +88,19 @@ final class ServiceController extends Controller
             'icon' => in_array($icon, Icon::keys(), true) ? $icon : null,
             'short_description' => trim((string) $this->input('short_description', '')),
             'content' => trim((string) $this->input('content', '')),
+            'stats' => $this->jsonArrayField('stats'),
+            'highlights' => $this->jsonArrayField('highlights'),
+            'process_steps' => $this->jsonArrayField('process_steps'),
             'sort_order' => (int) $this->input('sort_order', 0),
             'status' => $this->input('status', 'published') === 'draft' ? 'draft' : 'published',
         ];
+    }
+
+    /** Repeater fields (stats/highlights/process_steps) arrive as a JSON string built client-side; store [] rather than an invalid value if it's missing or malformed. */
+    private function jsonArrayField(string $key): string
+    {
+        $decoded = json_decode((string) $this->input($key, '[]'), true);
+
+        return json_encode(is_array($decoded) ? array_values($decoded) : [], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
     }
 }

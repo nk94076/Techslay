@@ -283,6 +283,44 @@ Every publisher joining the network goes through an initial vetting review, and 
 
 If fraud is the reason you''ve soured on affiliate marketing before, this is the part of our infrastructure built specifically to fix that.' WHERE slug = 'fraud-detection';
 
+-- Structured content for the rich service-detail template: stats bar, "What's
+-- Included" highlight grid, and "How It Works" process steps per service.
+UPDATE services SET
+  stats = '[{"value":"3","label":"Pricing Models — CPS, CPL, CPI"},{"value":"100%","label":"Attribution via S2S Tracking"},{"value":"24/7","label":"Campaign Monitoring"}]',
+  highlights = '[{"icon":"chart-bar","title":"Full-Funnel Campaign Management","description":"From launch to payout, every campaign is managed end to end rather than handed off after setup."},{"icon":"users","title":"Publisher Recruitment and Curation","description":"We match campaigns to publisher segments that fit the vertical, not just whoever is available."},{"icon":"puzzle-piece","title":"S2S Tracking Setup","description":"Server-to-server postbacks are configured as the default, so attribution holds up regardless of browser or device."},{"icon":"shield-check","title":"Fraud Screening on Every Conversion","description":"Every click and conversion is checked before it is billed, not after."}]',
+  process_steps = '[{"title":"Define Your Goal","description":"We start by matching your business goal to the right pricing model — CPS, CPL or CPI."},{"title":"We Set Up Tracking","description":"S2S postback tracking is configured and tested before any traffic goes live."},{"title":"Publishers Go Live","description":"Matched publishers start sending traffic under agreed commission terms."},{"title":"You Pay for Results","description":"Billing only happens on verified conversions that pass fraud screening."}]'
+WHERE slug = 'affiliate-marketing';
+
+UPDATE services SET
+  stats = '[{"value":"6+","label":"Publisher Categories"},{"value":"11","label":"Industries Covered"},{"value":"Sub-ID","label":"Level Reporting"}]',
+  highlights = '[{"icon":"users","title":"Vetted Publisher Access","description":"Every publisher is reviewed for traffic quality and compliance before going live."},{"icon":"link","title":"Deep-Linking Support","description":"Traffic can land on any page of your site, not just a fixed landing page."},{"icon":"photo","title":"Ready-Made Creative Assets","description":"Banners, email swipe copy and product feeds are supplied directly by advertisers."},{"icon":"currency-dollar","title":"Reliable Payout Schedule","description":"Publishers are paid on the schedule they are promised, with statements that reconcile against their own tracking."}]',
+  process_steps = '[{"title":"Apply to the Network","description":"Publishers submit their traffic sources and channels for review."},{"title":"Get Vetted and Approved","description":"We check traffic quality, conversion history and compliance before approval."},{"title":"Pick Offers That Fit","description":"An account manager helps match offers to the publisher’s actual audience."},{"title":"Track Earnings in Real Time","description":"Clicks, conversions and payouts are visible on a live dashboard."}]'
+WHERE slug = 'publisher-network';
+
+UPDATE services SET
+  stats = '[{"value":"$0","label":"Spend Without a Result"},{"value":"Live","label":"Dashboard Reporting"},{"value":"100%","label":"Verified Before Billing"}]',
+  highlights = '[{"icon":"trending-up","title":"Outcome-Based Spend","description":"Budget scales with results instead of running on a fixed schedule regardless of performance."},{"icon":"chart-bar","title":"Real-Time Performance Dashboards","description":"Conversion rates and spend efficiency are visible as they happen."},{"icon":"cog","title":"Commission Structuring by Margin","description":"Payout tiers are built around your margins, not a generic rate card."},{"icon":"shield-check","title":"Fraud-Screened Conversions","description":"Every result billed has already passed fraud verification."}]',
+  process_steps = '[{"title":"Set Your Target Outcome","description":"We define what a qualifying sale, lead or install actually looks like for your business."},{"title":"We Structure Commission and Tracking","description":"Payout rates and attribution are configured around your margins."},{"title":"Campaign Goes Live","description":"The campaign runs across matched publishers in the network."},{"title":"Reallocate Using Live Data","description":"Budget shifts toward what is working using real-time dashboards, not a delayed report."}]'
+WHERE slug = 'performance-marketing';
+
+UPDATE services SET
+  stats = '[{"value":"S2S","label":"Server-to-Server Default"},{"value":"Days","label":"Not Weeks, to Go Live"},{"value":"Sub-ID","label":"Full Attribution Chain"}]',
+  highlights = '[{"icon":"puzzle-piece","title":"Postback URL Setup","description":"Standard postback configuration that fits into your existing stack."},{"icon":"link","title":"Sub-ID Passthrough","description":"Every conversion traces back to the exact publisher, creative and source."},{"icon":"device-phone","title":"MMP Integration for Mobile","description":"Installs and in-app events are tracked through leading mobile measurement partners."},{"icon":"clock","title":"Real-Time Conversion Sync","description":"Both sides of the network see conversions as they are verified, not at month-end."}]',
+  process_steps = '[{"title":"Share Your Stack","description":"Tell us how checkout, leads or installs are currently tracked."},{"title":"We Configure Postbacks","description":"S2S postback URLs are set up against your existing platform."},{"title":"Test and Validate","description":"Attribution is tested end to end before any live traffic depends on it."},{"title":"Go Live With Real-Time Sync","description":"Conversions flow in as they happen, on both the advertiser and publisher side."}]'
+WHERE slug = 'tracking-integration';
+
+UPDATE services SET
+  stats = '[{"value":"IAB","label":"Standard Ad Sizes"},{"value":"100%","label":"Compliance Reviewed"},{"value":"Ongoing","label":"Creative Iteration"}]',
+  highlights = '[{"icon":"photo","title":"Banners and Display Creative","description":"Sized and formatted for the channels your publishers actually use."},{"icon":"pencil-square","title":"Landing Page Builds","description":"Dedicated pages built around a single, clear call to action."},{"icon":"envelope","title":"Email Swipe Copy","description":"Ready-to-send copy for email publishers."},{"icon":"document","title":"Product Feed Formatting","description":"Structured feeds for comparison and deal sites."}]',
+  process_steps = '[{"title":"Audit What is Converting","description":"We review existing performance before building anything new."},{"title":"Build Channel-Specific Creative","description":"Assets are built for the exact formats each publisher type uses."},{"title":"Compliance and Brand Review","description":"Every asset is checked against claims, disclosures and brand guidelines."},{"title":"Monitor and Iterate","description":"Creative that stops converting gets replaced, not left running on autopilot."}]'
+WHERE slug = 'creative-development';
+
+UPDATE services SET
+  stats = '[{"value":"3","label":"Detection Layers"},{"value":"Pre-Bill","label":"Screening, Not Refunds"},{"value":"24/7","label":"Continuous Monitoring"}]',
+  highlights = '[{"icon":"magnifying-glass","title":"Click Pattern Analysis","description":"Abnormal frequency or timing from a single source is flagged automatically."},{"icon":"device-phone","title":"Device and IP Fingerprinting","description":"Repeat abuse from the same actor is caught across different accounts."},{"icon":"clock","title":"Conversion Timing Checks","description":"Leads or sales that complete implausibly fast are flagged for review."},{"icon":"shield-check","title":"Ongoing Publisher Vetting","description":"Traffic quality is monitored continuously, not just at onboarding."}]',
+  process_steps = '[{"title":"Every Click is Logged","description":"Click and conversion data is captured with device and timing signals."},{"title":"Signals Are Cross-Checked","description":"Patterns are compared against known abuse signatures."},{"title":"Suspicious Activity is Held","description":"Flagged conversions are reviewed before they are ever billed."},{"title":"Only Verified Actions Are Billed","description":"Advertisers pay for conversions that have passed every check."}]'
+WHERE slug = 'fraud-detection';
+
 INSERT INTO industries (title, slug, icon, description, sort_order, status) VALUES
 ('Ecommerce', 'ecommerce', 'shopping-bag', 'Drive qualified purchases with performance-based campaigns.', 1, 'published'),
 ('Education', 'education', 'academic-cap', 'Generate quality leads for course and program enrollments.', 2, 'published'),

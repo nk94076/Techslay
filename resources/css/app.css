@@ -41,6 +41,19 @@
 }
 
 @layer utilities {
+  /* Only elements the reveal.js script decides are below the fold get this
+     class, so above-the-fold content never flashes visible-then-hidden. */
+  .reveal-pending {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .revealed {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+  }
+
   .glass {
     background: rgba(255, 255, 255, 0.6);
     backdrop-filter: blur(12px);

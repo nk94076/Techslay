@@ -78,6 +78,7 @@ $customCss = Setting::get('general', 'custom_css', '');
 <?php View::partial('partials.tailwind-config'); ?>
 <script defer src="<?= View::e(View::asset('js/alpine-collapse.min.js')) ?>"></script>
 <script defer src="<?= View::e(View::asset('js/alpine.min.js')) ?>"></script>
+<script defer src="<?= View::e(View::asset('js/reveal.js')) ?>"></script>
 </head>
 <body class="bg-white text-slate-800 antialiased">
 

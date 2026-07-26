@@ -11,12 +11,12 @@ $logos = $content['logos'] ?? [];
     <p class="text-center text-xs font-semibold tracking-widest text-slate-400 uppercase mb-8">
       <?= View::e($content['title'] ?? '') ?>
     </p>
-    <div class="flex flex-wrap items-center justify-center gap-x-12 gap-y-6 opacity-70">
+    <div class="flex flex-wrap items-center justify-center gap-x-12 gap-y-6">
       <?php foreach ($logos as $logo): ?>
         <?php if (is_array($logo) && !empty($logo['image'])): ?>
-          <img src="<?= View::e(View::url(ltrim($logo['image'], '/'))) ?>" alt="<?= View::e($logo['name'] ?? '') ?>" class="h-7 w-auto grayscale">
+          <img src="<?= View::e(View::url(ltrim($logo['image'], '/'))) ?>" alt="<?= View::e($logo['name'] ?? '') ?>" class="h-7 w-auto grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-200">
         <?php else: ?>
-          <span class="text-slate-400 font-bold text-lg tracking-tight"><?= View::e(is_array($logo) ? ($logo['name'] ?? '') : $logo) ?></span>
+          <span class="text-slate-400 hover:text-slate-600 font-bold text-lg tracking-tight transition-colors"><?= View::e(is_array($logo) ? ($logo['name'] ?? '') : $logo) ?></span>
         <?php endif; ?>
       <?php endforeach; ?>
     </div>

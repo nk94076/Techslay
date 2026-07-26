@@ -17,7 +17,7 @@ use App\Core\View;
       <?php foreach ($services as $service): ?>
         <a href="<?= View::url('services/' . $service['slug']) ?>"
            class="group rounded-2xl bg-white border border-slate-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-200 p-7">
-          <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-brand-500 to-accent-500 text-white flex items-center justify-center mb-5">
+          <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-brand-500 to-accent-500 text-white flex items-center justify-center mb-5 shadow-lg shadow-brand-500/20 group-hover:scale-110 transition-transform duration-200">
             <?= Icon::render($service['icon'] ?? null, 'w-6 h-6') ?>
           </div>
           <h3 class="font-semibold text-lg text-slate-900 group-hover:text-brand-600 transition"><?= View::e($service['title']) ?></h3>

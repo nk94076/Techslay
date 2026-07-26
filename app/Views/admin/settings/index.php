@@ -58,10 +58,23 @@ $fontLabels = [
             <option value="true" <?= $setting['value'] === 'true' ? 'selected' : '' ?>>Enabled</option>
             <option value="false" <?= $setting['value'] === 'false' ? 'selected' : '' ?>>Disabled</option>
           </select>
+        <?php elseif ($setting['type'] === 'image'): ?>
+          <?php $inputId = 'setting-image-' . $setting['key']; ?>
+          <div class="flex items-center gap-3">
+            <?php if ($setting['value']): ?>
+              <img src="<?= View::e(View::url(ltrim($setting['value'], '/'))) ?>" alt="" class="h-10 w-10 rounded-lg object-contain border border-slate-200 bg-slate-50">
+            <?php endif; ?>
+            <input type="text" id="<?= $inputId ?>" name="settings[<?= View::e($setting['key']) ?>]" value="<?= View::e($setting['value']) ?>"
+                   class="flex-1 rounded-lg border border-slate-200 px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-brand-400"
+                   placeholder="No image chosen">
+            <button type="button" class="shrink-0 rounded-lg border border-slate-200 px-4 py-2.5 text-sm font-medium text-slate-600 hover:bg-slate-50"
+                    onclick="openMediaPicker((path) => { document.getElementById('<?= $inputId ?>').value = path; })">
+              Browse&hellip;
+            </button>
+          </div>
         <?php else: ?>
           <input type="text" name="settings[<?= View::e($setting['key']) ?>]" value="<?= View::e($setting['value']) ?>"
-                 class="w-full rounded-lg border border-slate-200 px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-brand-400"
-                 <?= $setting['type'] === 'image' ? 'placeholder="/uploads/2026/01/logo.png — upload via Media Manager"' : '' ?>>
+                 class="w-full rounded-lg border border-slate-200 px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-brand-400">
         <?php endif; ?>
       </div>
     <?php endforeach; ?>

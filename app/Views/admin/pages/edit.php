@@ -95,12 +95,15 @@ $knownTypes = [
         </datalist>
       </div>
       <div>
-        <label class="block text-xs font-medium text-slate-600 mb-1">Content (JSON)</label>
+        <div class="flex items-center justify-between mb-1">
+          <label class="block text-xs font-medium text-slate-600">Content (JSON)</label>
+          <button type="button" onclick="insertImagePath()" class="text-xs text-brand-600 hover:underline">Insert image path&hellip;</button>
+        </div>
         <textarea id="section-content" name="content" rows="10" required
                   class="w-full rounded-lg border border-slate-200 px-3 py-2 text-xs font-mono focus:outline-none focus:ring-2 focus:ring-brand-400">{
   "title": ""
 }</textarea>
-        <p class="text-[11px] text-slate-400 mt-1">Must be valid JSON. Match the keys the section's template expects (e.g. <code>title</code>, <code>items</code>).</p>
+        <p class="text-[11px] text-slate-400 mt-1">Must be valid JSON. Match the keys the section's template expects (e.g. <code>title</code>, <code>items</code>). For image fields (e.g. an array of <code>{"name":"...","image":"..."}</code> logos), place your cursor where the path should go and click "Insert image path" to browse the Media Library instead of typing it by hand.</p>
       </div>
       <button type="submit" class="w-full rounded-lg bg-gradient-to-r from-brand-500 to-accent-500 text-white text-sm font-semibold py-2.5">Save Section</button>
       <button type="button" onclick="resetSectionForm()" class="w-full text-xs text-slate-400 hover:text-slate-600">Cancel edit</button>
@@ -116,6 +119,17 @@ function openEditSection(section) {
   document.getElementById('section-type').value = section.component_type;
   document.getElementById('section-content').value = JSON.stringify(JSON.parse(section.content), null, 2);
   document.getElementById('section-form').action = sectionsBaseUrl + '/' + section.id;
+}
+
+function insertImagePath() {
+  const textarea = document.getElementById('section-content');
+  openMediaPicker((path) => {
+    const start = textarea.selectionStart ?? textarea.value.length;
+    const end = textarea.selectionEnd ?? textarea.value.length;
+    textarea.value = textarea.value.slice(0, start) + path + textarea.value.slice(end);
+    textarea.focus();
+    textarea.selectionStart = textarea.selectionEnd = start + path.length;
+  });
 }
 
 function resetSectionForm() {

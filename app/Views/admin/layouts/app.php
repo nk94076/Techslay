@@ -95,5 +95,7 @@ $currentPath = trim($_SERVER['REQUEST_URI'] ?? '', '/');
     </main>
   </div>
 </div>
+
+<?php View::partial('admin.partials._media_picker'); ?>
 </body>
 </html>

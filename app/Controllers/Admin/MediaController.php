@@ -61,6 +61,31 @@ final class MediaController extends Controller
         ], 'admin.layouts.app');
     }
 
+    /**
+     * Read-only JSON feed of images for the Media Picker modal (used from
+     * Settings image fields and the page-section content editor). Deliberately
+     * separate from index() so it isn't gated behind media.manage — any
+     * authenticated admin picking a logo/section image just needs to browse,
+     * not manage, the library.
+     */
+    public function picker(): void
+    {
+        $search = (string) $this->input('q', '');
+
+        $sql = "SELECT id, path, webp_path, original_name, alt_text FROM media
+                WHERE deleted_at IS NULL AND type IN ('image', 'svg')";
+        $params = [];
+
+        if ($search !== '') {
+            $sql .= ' AND original_name LIKE :search';
+            $params['search'] = '%' . $search . '%';
+        }
+
+        $sql .= ' ORDER BY created_at DESC LIMIT 60';
+
+        $this->json(['success' => true, 'media' => Database::fetchAll($sql, $params)]);
+    }
+
     public function upload(): void
     {
         $this->requireCsrf();

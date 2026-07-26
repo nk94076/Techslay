@@ -42,6 +42,11 @@ $router->group('/admin', [], function (Router $router): void {
     $router->post('/logout', [AuthController::class, 'logout'], [AuthMiddleware::class, CsrfMiddleware::class]);
     $router->get('/dashboard', [DashboardController::class, 'index'], [AuthMiddleware::class]);
 
+    // Read-only image browser used by the Media Picker modal on any admin
+    // screen with an image field (settings, section content, etc.) — not
+    // gated behind media.manage since it doesn't mutate anything.
+    $router->get('/media-picker', [MediaController::class, 'picker'], [AuthMiddleware::class]);
+
     // Media Manager
     $router->group('/media', [AuthMiddleware::class, PermissionMiddleware::require('media.manage')], function (Router $router): void {
         $router->get('', [MediaController::class, 'index']);

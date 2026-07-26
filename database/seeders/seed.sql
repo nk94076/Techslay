@@ -172,15 +172,37 @@ INSERT INTO page_sections (page_id, component_type, content, sort_order, status)
         JSON_OBJECT('icon', 'cog', 'title', 'Open API', 'description', 'Full REST API access for custom integrations and reporting.')
     )
 ), 11, 'published'),
+(1, 'analytics_chart', JSON_OBJECT(
+    'eyebrow', 'Live Reporting',
+    'title', 'Real-Time Analytics for Unmatched Control',
+    'subtitle', 'Every click, conversion and payout updates live — no waiting on a weekly report to know what is working.',
+    'chart_title', 'Lead Quality Trend',
+    'chart_subtitle', 'Last 7 days',
+    'chart_type', 'bar',
+    'data', JSON_ARRAY(
+        JSON_OBJECT('label', 'Mon', 'value', 62),
+        JSON_OBJECT('label', 'Tue', 'value', 74),
+        JSON_OBJECT('label', 'Wed', 'value', 58),
+        JSON_OBJECT('label', 'Thu', 'value', 81),
+        JSON_OBJECT('label', 'Fri', 'value', 90),
+        JSON_OBJECT('label', 'Sat', 'value', 76),
+        JSON_OBJECT('label', 'Sun', 'value', 95)
+    ),
+    'highlights', JSON_ARRAY(
+        JSON_OBJECT('icon', 'chart-bar', 'title', 'Sub-ID Level Reporting', 'description', 'See exactly which source, creative and placement is converting.'),
+        JSON_OBJECT('icon', 'clock', 'title', 'Millisecond Attribution', 'description', 'Server-to-server tracking updates dashboards in real time.'),
+        JSON_OBJECT('icon', 'shield-check', 'title', 'Verified Before Billed', 'description', 'Every conversion is fraud-checked before it counts.')
+    )
+), 12, 'published'),
 (1, 'process', JSON_OBJECT(
     'title', 'Our Process',
     'items', JSON_ARRAY('Discovery', 'Strategy', 'Integration', 'Optimization', 'Scaling')
-), 12, 'published'),
-(1, 'testimonials', JSON_OBJECT('title', 'What Our Partners Say'), 13, 'published'),
-(1, 'latest_blogs', JSON_OBJECT('title', 'From The Blog'), 14, 'published'),
-(1, 'faq', JSON_OBJECT('title', 'Frequently Asked Questions', 'group', 'general'), 15, 'published'),
-(1, 'contact_cta', JSON_OBJECT('title', 'Ready to Grow With Techslay?', 'button_text', 'Get In Touch', 'button_url', '/contact'), 16, 'published'),
-(1, 'newsletter', JSON_OBJECT('title', 'Stay Updated'), 17, 'published');
+), 13, 'published'),
+(1, 'testimonials', JSON_OBJECT('title', 'What Our Partners Say'), 14, 'published'),
+(1, 'latest_blogs', JSON_OBJECT('title', 'From The Blog'), 15, 'published'),
+(1, 'faq', JSON_OBJECT('title', 'Frequently Asked Questions', 'group', 'general'), 16, 'published'),
+(1, 'contact_cta', JSON_OBJECT('title', 'Ready to Grow With Techslay?', 'button_text', 'Get In Touch', 'button_url', '/contact'), 17, 'published'),
+(1, 'newsletter', JSON_OBJECT('title', 'Stay Updated'), 18, 'published');
 
 INSERT INTO testimonials (name, designation, company, rating, content, sort_order, status) VALUES
 ('Aarav Mehta', 'Growth Lead', 'ShopEase', 5, 'Techslay helped us scale CPS campaigns profitably within the first month. Reporting transparency is unmatched.', 1, 'published'),

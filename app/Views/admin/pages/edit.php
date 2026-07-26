@@ -11,6 +11,7 @@ $knownTypes = [
     'hero', 'trusted_by', 'statistics', 'services_grid', 'campaign_types', 'why_choose_us',
     'how_it_works', 'publisher_benefits', 'advertiser_benefits', 'industries', 'technology',
     'process', 'testimonials', 'latest_blogs', 'faq', 'contact_cta', 'newsletter', 'custom_html',
+    'analytics_chart',
 ];
 ?>
 <div class="grid lg:grid-cols-[1fr_320px] gap-6">

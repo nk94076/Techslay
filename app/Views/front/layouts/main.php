@@ -9,9 +9,40 @@
 
 use App\Core\Seo;
 use App\Core\View;
+use App\Models\Service;
 use App\Models\Setting;
 
 $siteName = Setting::get('branding', 'site_name', 'Techslay');
+
+/**
+ * The header's "Services" and "Company" nav items become rich mega panels
+ * instead of plain links. Services are pulled from the Services module
+ * directly (already richer than a menu link); "Company" groups whichever
+ * admin-managed header menu items point at these core informational pages,
+ * so adding/removing/reordering them in the Menu Builder still works without
+ * touching this view.
+ */
+$companyGroupSlugs = ['about', 'technology', 'case-studies', 'blog'];
+$navPrimary = [];
+$navCompany = [];
+
+foreach ($headerMenu ?? [] as $item) {
+    $slug = trim($item['url'], '/');
+
+    if (in_array($slug, ['services', 'contact'], true)) {
+        continue;
+    }
+
+    if (in_array($slug, $companyGroupSlugs, true)) {
+        $navCompany[] = $item;
+
+        continue;
+    }
+
+    $navPrimary[] = $item;
+}
+
+$megaServices = Service::published();
 $seo = $seo ?? [];
 
 $resolvedTitle = $seo['title'] ?? ($pageTitle ?? '');
@@ -82,17 +113,11 @@ $customCss = Setting::get('general', 'custom_css', '');
 </head>
 <body class="bg-white text-slate-800 antialiased">
 
-<header class="sticky top-0 z-50 glass border-b border-slate-100">
-  <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-    <a href="<?= View::url('/') ?>"><?php View::partial('partials.logo'); ?></a>
-    <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-600">
-      <?php foreach ($headerMenu ?? [] as $item): ?>
-        <a href="<?= View::url(ltrim($item['url'], '/')) ?>" class="hover:text-brand-500 transition"><?= View::e($item['label']) ?></a>
-      <?php endforeach; ?>
-    </nav>
-    <a href="<?= View::url('contact') ?>" class="hidden md:inline-flex items-center rounded-full bg-gradient-to-r from-brand-500 to-accent-500 text-white text-sm font-semibold px-5 py-2.5 shadow-lg shadow-brand-500/20 hover:shadow-brand-500/40 transition">Get Started</a>
-  </div>
-</header>
+<?php View::partial('partials.header-nav', [
+  'navPrimary' => $navPrimary,
+  'navCompany' => $navCompany,
+  'megaServices' => $megaServices,
+]); ?>
 
 <main><?= $content ?></main>
 

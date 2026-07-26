@@ -50,6 +50,10 @@
   }
 }
 
+[x-cloak] {
+  display: none !important;
+}
+
 @layer utilities {
   /* Only elements the reveal.js script decides are below the fold get this
      class, so above-the-fold content never flashes visible-then-hidden. */

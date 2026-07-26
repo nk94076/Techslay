@@ -119,7 +119,11 @@ INSERT INTO page_sections (page_id, component_type, content, sort_order, status)
     'title', 'Trusted By Growing Brands',
     'logos', JSON_ARRAY('Brand One', 'Brand Two', 'Brand Three', 'Brand Four', 'Brand Five', 'Brand Six')
 ), 2, 'published'),
-(1, 'statistics', JSON_OBJECT('title', 'Our Numbers'), 3, 'published'),
+-- Draft by default: the hero now shows the same top-4 stats in a floating
+-- card of its own, so this full showcase further down the page would repeat
+-- them a few scrolls later. Kept in place (not deleted) so it can be
+-- republished from the admin if the content changes to something distinct.
+(1, 'statistics', JSON_OBJECT('title', 'Our Numbers'), 3, 'draft'),
 (1, 'services_grid', JSON_OBJECT('title', 'Our Services', 'subtitle', 'End-to-end performance marketing infrastructure'), 4, 'published'),
 (1, 'campaign_types', JSON_OBJECT(
     'title', 'Campaign Types',

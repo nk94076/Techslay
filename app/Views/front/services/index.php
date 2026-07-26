@@ -5,12 +5,10 @@ use App\Core\View;
 
 /** @var array $services */
 ?>
-<section class="py-20 bg-gradient-to-b from-brand-50 via-white to-white">
-  <div class="max-w-3xl mx-auto px-6 text-center">
-    <h1 class="text-4xl md:text-5xl font-extrabold text-slate-900">Our Services</h1>
-    <p class="mt-4 text-slate-600">End-to-end performance marketing infrastructure for advertisers and publishers.</p>
-  </div>
-</section>
+<?php View::partial('partials.page-banner', [
+  'title' => 'Our Services',
+  'subtitle' => 'End-to-end performance marketing infrastructure for advertisers and publishers.',
+]); ?>
 
 <section class="py-16">
   <div class="max-w-6xl mx-auto px-6">

@@ -22,12 +22,10 @@ $thumb = static function (array $post): ?string {
     return $post['featured_image'] ?? null;
 };
 ?>
-<section class="py-20 bg-gradient-to-b from-brand-50 via-white to-white">
-  <div class="max-w-3xl mx-auto px-6 text-center">
-    <h1 class="text-4xl md:text-5xl font-extrabold text-slate-900">Blog</h1>
-    <p class="mt-4 text-slate-600">Performance marketing insights, playbooks and network updates.</p>
-  </div>
-</section>
+<?php View::partial('partials.page-banner', [
+  'title' => 'Blog',
+  'subtitle' => 'Performance marketing insights, playbooks and network updates.',
+]); ?>
 
 <section class="py-16">
   <div class="max-w-6xl mx-auto px-6">

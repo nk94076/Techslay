@@ -4,20 +4,24 @@ use App\Core\Icon;
 use App\Core\View;
 
 /** @var array $content */
+/** @var array $statistics */
+
+$heroStats = array_slice($statistics ?? [], 0, 4);
 ?>
-<section class="relative overflow-hidden bg-gradient-to-b from-brand-50 via-white to-white">
-  <div class="absolute -top-40 -right-40 w-[36rem] h-[36rem] bg-gradient-to-br from-brand-300 to-accent-500 opacity-20 blur-3xl rounded-full"></div>
+<section class="relative overflow-hidden bg-slate-950">
+  <div class="absolute inset-0 opacity-60" style="background-image: radial-gradient(circle at 12% 15%, rgb(var(--brand-600) / 0.35), transparent 40%), radial-gradient(circle at 88% 75%, rgb(var(--accent-600) / 0.3), transparent 40%);"></div>
+  <div class="absolute -top-40 -right-40 w-[36rem] h-[36rem] bg-gradient-to-br from-brand-500 to-accent-500 opacity-20 blur-3xl rounded-full"></div>
   <div class="absolute -bottom-40 -left-40 w-[30rem] h-[30rem] bg-gradient-to-tr from-accent-500 to-brand-400 opacity-10 blur-3xl rounded-full"></div>
 
   <div class="relative max-w-7xl mx-auto px-6 pt-20 pb-24 lg:pt-28 lg:pb-32 grid lg:grid-cols-2 gap-16 items-center">
     <div class="text-center lg:text-left">
-      <span class="inline-block rounded-full bg-white/80 border border-brand-100 px-4 py-1.5 text-xs font-semibold text-brand-600 shadow-sm mb-6">
+      <span class="inline-block rounded-full bg-white/10 border border-white/10 px-4 py-1.5 text-xs font-semibold text-brand-300 mb-6">
         <?= View::e($content['eyebrow'] ?? '') ?>
       </span>
-      <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 leading-tight">
+      <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-tight">
         <?= View::e($content['title'] ?? '') ?>
       </h1>
-      <p class="mt-6 text-lg text-slate-600 max-w-xl mx-auto lg:mx-0">
+      <p class="mt-6 text-lg text-slate-300 max-w-xl mx-auto lg:mx-0">
         <?= View::e($content['subtitle'] ?? '') ?>
       </p>
       <div class="mt-10 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
@@ -26,7 +30,7 @@ use App\Core\View;
           <?= View::e($content['primary_button_text'] ?? 'Get Started') ?>
         </a>
         <a href="<?= View::url(ltrim($content['secondary_button_url'] ?? '/', '/')) ?>"
-           class="inline-flex items-center justify-center rounded-full bg-white border border-slate-200 text-slate-700 font-semibold px-8 py-3.5 shadow-sm hover:shadow-md hover:border-brand-200 transition-all duration-200">
+           class="inline-flex items-center justify-center rounded-full bg-white/10 border border-white/20 text-white font-semibold px-8 py-3.5 hover:bg-white/15 transition-all duration-200">
           <?= View::e($content['secondary_button_text'] ?? 'Learn More') ?>
         </a>
       </div>
@@ -88,4 +92,17 @@ use App\Core\View;
       </div>
     </div>
   </div>
+
+  <?php if ($heroStats !== []): ?>
+    <div class="relative max-w-5xl mx-auto px-6 pb-16 lg:pb-20">
+      <div class="rounded-2xl bg-white shadow-2xl px-6 sm:px-10 py-6 grid grid-cols-2 md:grid-cols-4 gap-6 divide-x divide-slate-100">
+        <?php foreach ($heroStats as $stat): ?>
+          <div class="text-center px-2">
+            <div class="text-2xl md:text-3xl font-extrabold gradient-text"><?= View::e($stat['value']) ?><?= View::e($stat['suffix'] ?? '') ?></div>
+            <div class="mt-1 text-xs text-slate-500 font-medium"><?= View::e($stat['label']) ?></div>
+          </div>
+        <?php endforeach; ?>
+      </div>
+    </div>
+  <?php endif; ?>
 </section>

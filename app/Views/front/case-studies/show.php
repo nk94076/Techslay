@@ -5,13 +5,11 @@ use App\Core\View;
 /** @var array $case */
 /** @var array $metrics */
 ?>
-<section class="py-20 bg-gradient-to-b from-brand-50 via-white to-white">
-  <div class="max-w-3xl mx-auto px-6 text-center">
-    <span class="inline-block rounded-full bg-white/80 border border-brand-100 px-4 py-1.5 text-xs font-semibold text-brand-600 shadow-sm mb-6">Case Study</span>
-    <h1 class="text-4xl md:text-5xl font-extrabold text-slate-900"><?= View::e($case['title']) ?></h1>
-    <p class="mt-4 text-slate-600"><?= View::e($case['summary'] ?? '') ?></p>
-  </div>
-</section>
+<?php View::partial('partials.page-banner', [
+  'badge' => 'Case Study',
+  'title' => $case['title'],
+  'subtitle' => $case['summary'] ?? '',
+]); ?>
 
 <?php if ($metrics !== []): ?>
 <section class="py-10">

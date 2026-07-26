@@ -38,27 +38,29 @@ $navLinks = array_filter([
 ?>
 
 <!-- Hero -->
-<section class="relative overflow-hidden bg-gradient-to-b from-brand-50 via-white to-white py-16 lg:py-20">
-  <div class="max-w-7xl mx-auto px-6 grid lg:grid-cols-[1fr_420px] gap-12 items-start">
+<section class="relative overflow-hidden bg-slate-950 py-16 lg:py-20">
+  <div class="absolute inset-0 opacity-60" style="background-image: radial-gradient(circle at 12% 15%, rgb(var(--brand-600) / 0.35), transparent 40%), radial-gradient(circle at 88% 75%, rgb(var(--accent-600) / 0.3), transparent 40%);"></div>
+
+  <div class="relative max-w-7xl mx-auto px-6 grid lg:grid-cols-[1fr_420px] gap-12 items-start">
     <div>
       <nav class="text-xs text-slate-400 mb-4" aria-label="Breadcrumb">
-        <a href="<?= View::url('/') ?>" class="hover:text-brand-600">Home</a>
+        <a href="<?= View::url('/') ?>" class="hover:text-white">Home</a>
         <span class="mx-1.5">/</span>
-        <a href="<?= View::url('services') ?>" class="hover:text-brand-600">Services</a>
+        <a href="<?= View::url('services') ?>" class="hover:text-white">Services</a>
         <span class="mx-1.5">/</span>
-        <span class="text-slate-600"><?= View::e($service['title']) ?></span>
+        <span class="text-slate-300"><?= View::e($service['title']) ?></span>
       </nav>
-      <span class="inline-flex items-center gap-2 rounded-full bg-white border border-brand-100 px-4 py-1.5 text-xs font-semibold text-brand-600 shadow-sm mb-6">
+      <span class="inline-flex items-center gap-2 rounded-full bg-white/10 border border-white/10 px-4 py-1.5 text-xs font-semibold text-brand-300 mb-6">
         <?= Icon::render($service['icon'] ?? null, 'w-3.5 h-3.5') ?>
         Service
       </span>
-      <h1 class="text-4xl md:text-5xl font-extrabold text-slate-900 leading-tight"><?= View::e($service['title']) ?></h1>
-      <p class="mt-5 text-lg text-slate-600 leading-relaxed max-w-xl"><?= View::e($service['short_description']) ?></p>
+      <h1 class="text-4xl md:text-5xl font-extrabold text-white leading-tight"><?= View::e($service['title']) ?></h1>
+      <p class="mt-5 text-lg text-slate-300 leading-relaxed max-w-xl"><?= View::e($service['short_description']) ?></p>
 
       <?php if ($navLinks !== []): ?>
         <div class="mt-8 flex flex-wrap gap-2">
           <?php foreach ($navLinks as $link): ?>
-            <a href="#<?= $link['id'] ?>" class="text-sm font-medium text-slate-600 bg-white border border-slate-200 rounded-full px-4 py-2 hover:border-brand-300 hover:text-brand-600 transition"><?= View::e($link['label']) ?></a>
+            <a href="#<?= $link['id'] ?>" class="text-sm font-medium text-white/80 bg-white/10 border border-white/10 rounded-full px-4 py-2 hover:bg-white/15 hover:text-white transition"><?= View::e($link['label']) ?></a>
           <?php endforeach; ?>
         </div>
       <?php endif; ?>
@@ -93,21 +95,21 @@ $navLinks = array_filter([
       </form>
     </div>
   </div>
-</section>
 
-<!-- Stats bar -->
-<?php if ($stats !== []): ?>
-<section class="border-y border-slate-100 bg-slate-950">
-  <div class="max-w-7xl mx-auto px-6 py-10 grid grid-cols-2 <?= $statsColsClass ?> gap-6">
-    <?php foreach ($stats as $stat): ?>
-      <div class="text-center sm:text-left">
-        <div class="text-3xl font-extrabold gradient-text"><?= View::e($stat['value'] ?? '') ?></div>
-        <div class="mt-1 text-sm text-slate-400"><?= View::e($stat['label'] ?? '') ?></div>
+  <!-- Floating stats card -->
+  <?php if ($stats !== []): ?>
+    <div class="relative max-w-5xl mx-auto px-6 pt-14 pb-2">
+      <div class="rounded-2xl bg-white shadow-2xl px-6 sm:px-10 py-6 grid grid-cols-2 <?= $statsColsClass ?> gap-6 divide-x divide-slate-100">
+        <?php foreach ($stats as $stat): ?>
+          <div class="text-center px-2">
+            <div class="text-2xl md:text-3xl font-extrabold gradient-text"><?= View::e($stat['value'] ?? '') ?></div>
+            <div class="mt-1 text-xs text-slate-500 font-medium"><?= View::e($stat['label'] ?? '') ?></div>
+          </div>
+        <?php endforeach; ?>
       </div>
-    <?php endforeach; ?>
-  </div>
+    </div>
+  <?php endif; ?>
 </section>
-<?php endif; ?>
 
 <!-- In-page sticky nav -->
 <?php if ($navLinks !== []): ?>

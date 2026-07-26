@@ -4,12 +4,10 @@ use App\Core\View;
 
 /** @var array $caseStudies */
 ?>
-<section class="py-20 bg-gradient-to-b from-brand-50 via-white to-white">
-  <div class="max-w-3xl mx-auto px-6 text-center">
-    <h1 class="text-4xl md:text-5xl font-extrabold text-slate-900">Case Studies</h1>
-    <p class="mt-4 text-slate-600">Real results from advertisers and publishers on the ClickNet network.</p>
-  </div>
-</section>
+<?php View::partial('partials.page-banner', [
+  'title' => 'Case Studies',
+  'subtitle' => 'Real results from advertisers and publishers on the Techslay network.',
+]); ?>
 
 <section class="py-16">
   <div class="max-w-6xl mx-auto px-6">

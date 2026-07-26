@@ -54,6 +54,8 @@ INSERT INTO settings (`group`, `key`, `value`, type) VALUES
 ('branding', 'favicon', '', 'image'),
 ('theme', 'primary_color', '#7C3AED', 'color'),
 ('theme', 'accent_color', '#2563EB', 'color'),
+('typography', 'heading_font', 'sora', 'text'),
+('typography', 'body_font', 'inter', 'text'),
 ('business', 'company_name', 'Techslay Media Pvt Ltd', 'text'),
 ('business', 'email', 'hello@techslay.com', 'text'),
 ('business', 'phone', '+91 00000 00000', 'text'),

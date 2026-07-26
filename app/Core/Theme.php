@@ -17,16 +17,32 @@ final class Theme
     private const LIGHT_STOPS = [50 => 0.95, 100 => 0.90, 200 => 0.75, 300 => 0.60, 400 => 0.35];
     private const DARK_STOPS = [600 => 0.20, 700 => 0.35, 800 => 0.50, 900 => 0.65];
 
+    /**
+     * Self-hosted font choices (public/assets/fonts/<slug>/). Values are
+     * fixed, known-safe font-family strings — never interpolate the raw
+     * `typography.*` setting value directly into CSS, since these get
+     * embedded in an unescaped <style> block.
+     */
+    public const FONT_STACKS = [
+        'inter' => "'Inter', ui-sans-serif, system-ui, sans-serif",
+        'poppins' => "'Poppins', ui-sans-serif, system-ui, sans-serif",
+        'sora' => "'Sora', ui-sans-serif, system-ui, sans-serif",
+        'plus-jakarta-sans' => "'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif",
+    ];
+
     public static function cssVariables(): string
     {
         $brand = Setting::get('theme', 'primary_color', '#7C3AED');
         $accent = Setting::get('theme', 'accent_color', '#2563EB');
 
-        $lines = ['brand' => self::ramp($brand), 'accent' => self::ramp($accent)];
+        $headingFont = Setting::get('typography', 'heading_font', 'sora');
+        $bodyFont = Setting::get('typography', 'body_font', 'inter');
 
         $css = ":root{\n";
+        $css .= "  --font-heading: " . (self::FONT_STACKS[$headingFont] ?? self::FONT_STACKS['sora']) . ";\n";
+        $css .= "  --font-body: " . (self::FONT_STACKS[$bodyFont] ?? self::FONT_STACKS['inter']) . ";\n";
 
-        foreach ($lines as $prefix => $ramp) {
+        foreach (['brand' => self::ramp($brand), 'accent' => self::ramp($accent)] as $prefix => $ramp) {
             foreach ($ramp as $stop => $rgb) {
                 $css .= "  --{$prefix}-{$stop}: {$rgb};\n";
             }

@@ -7,12 +7,13 @@ namespace App\Controllers\Admin;
 use App\Core\Controller;
 use App\Core\Database;
 use App\Core\Session;
+use App\Core\Theme;
 use App\Models\ActivityLog;
 use App\Models\Setting;
 
 final class SettingsController extends Controller
 {
-    private const GROUPS = ['general', 'branding', 'theme', 'business', 'social', 'analytics', 'smtp', 'recaptcha', 'seo', 'cookie_banner'];
+    private const GROUPS = ['general', 'branding', 'theme', 'typography', 'business', 'social', 'analytics', 'smtp', 'recaptcha', 'seo', 'cookie_banner'];
 
     public function index(string $group = 'branding'): void
     {
@@ -51,7 +52,14 @@ final class SettingsController extends Controller
         $typeMap = array_column($types, 'type', 'key');
 
         foreach ((array) $this->input('settings', []) as $key => $value) {
-            Setting::set($group, (string) $key, (string) $value, $typeMap[$key] ?? 'text');
+            $value = (string) $value;
+
+            if ($group === 'typography' && in_array($key, ['heading_font', 'body_font'], true)
+                && !array_key_exists($value, Theme::FONT_STACKS)) {
+                continue;
+            }
+
+            Setting::set($group, (string) $key, $value, $typeMap[$key] ?? 'text');
         }
 
         ActivityLog::record('settings.update', 'settings', null, $group);

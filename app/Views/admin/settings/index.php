@@ -7,9 +7,16 @@ use App\Core\View;
 /** @var array $settings */
 
 $labels = [
-    'general' => 'General', 'branding' => 'Branding', 'theme' => 'Theme', 'business' => 'Business Info',
-    'social' => 'Social Links', 'analytics' => 'Analytics', 'smtp' => 'SMTP',
+    'general' => 'General', 'branding' => 'Branding', 'theme' => 'Theme', 'typography' => 'Typography',
+    'business' => 'Business Info', 'social' => 'Social Links', 'analytics' => 'Analytics', 'smtp' => 'SMTP',
     'recaptcha' => 'reCAPTCHA', 'seo' => 'SEO Defaults', 'cookie_banner' => 'Cookie Banner',
+];
+
+$fontLabels = [
+    'inter' => 'Inter — clean, versatile sans-serif',
+    'poppins' => 'Poppins — geometric, friendly',
+    'sora' => 'Sora — modern, techy display',
+    'plus-jakarta-sans' => 'Plus Jakarta Sans — warm, professional',
 ];
 ?>
 <div class="flex flex-wrap gap-2 mb-6">
@@ -32,7 +39,13 @@ $labels = [
         <label class="block text-sm font-medium text-slate-700 mb-1">
           <?= View::e(ucwords(str_replace('_', ' ', $setting['key']))) ?>
         </label>
-        <?php if ($setting['type'] === 'textarea'): ?>
+        <?php if ($activeGroup === 'typography' && in_array($setting['key'], ['heading_font', 'body_font'], true)): ?>
+          <select name="settings[<?= View::e($setting['key']) ?>]" class="w-full rounded-lg border border-slate-200 px-4 py-2.5 text-sm">
+            <?php foreach ($fontLabels as $slug => $label): ?>
+              <option value="<?= View::e($slug) ?>" <?= $setting['value'] === $slug ? 'selected' : '' ?>><?= View::e($label) ?></option>
+            <?php endforeach; ?>
+          </select>
+        <?php elseif ($setting['type'] === 'textarea'): ?>
           <textarea name="settings[<?= View::e($setting['key']) ?>]" rows="3"
                     class="w-full rounded-lg border border-slate-200 px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-brand-400"><?= View::e($setting['value']) ?></textarea>
         <?php elseif ($setting['type'] === 'color'): ?>

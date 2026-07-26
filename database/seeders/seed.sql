@@ -340,3 +340,97 @@ INSERT INTO faqs (`group`, question, answer, sort_order, status) VALUES
 ('general', 'How do I become an advertiser?', 'Reach out via our Advertisers page or Contact form. We will scope your campaign goals and set up tracking within days.', 3, 'published'),
 ('general', 'What campaign types do you support?', 'We support Cost-Per-Sale (CPS), Cost-Per-Lead (CPL) and Cost-Per-Install (CPI) campaigns across multiple industries.', 4, 'published'),
 ('general', 'How is fraud prevented?', 'Our proprietary fraud detection system monitors traffic quality in real time, flagging and blocking invalid clicks and conversions.', 5, 'published');
+
+-- Sample blog content so the blog listing/post templates have real content
+-- to render instead of the "no articles published yet" empty state.
+INSERT INTO blog_categories (name, slug, description) VALUES
+('Playbooks', 'playbooks', 'Practical guides for running better performance marketing campaigns.'),
+('Network Updates', 'network-updates', 'What is new across the Techslay publisher and advertiser network.');
+
+INSERT INTO authors (name, slug, bio, job_title, linkedin_url) VALUES
+('Alex Rivera', 'alex-rivera', 'Alex leads partnership strategy at Techslay, working directly with advertisers and publishers to structure campaigns that scale.', 'Head of Partnerships', 'https://www.linkedin.com/');
+
+INSERT INTO blog_posts (category_id, author_id, title, slug, excerpt, featured_image, content, table_of_contents, reading_time_minutes, status, published_at) VALUES
+(
+  (SELECT id FROM blog_categories WHERE slug = 'playbooks'),
+  (SELECT id FROM authors WHERE slug = 'alex-rivera'),
+  'How to Choose Between CPS, CPL and CPI for Your Next Campaign',
+  'choosing-cps-cpl-cpi',
+  'CPS, CPL and CPI all pay for a result, not a click — but picking the wrong one for your funnel can quietly cap your growth. Here is how to choose.',
+  NULL,
+  '<p>Every performance marketing campaign starts with the same decision: what counts as a result worth paying for? Get this wrong and even a well-run campaign underperforms, not because the traffic was bad, but because the pricing model never matched the business it was funding.</p>
+<h2 id="understanding-the-three-models">Understanding the Three Models</h2>
+<p>Cost Per Sale (CPS) pays a commission on completed purchases, which makes it the default choice for ecommerce and subscription businesses where revenue is the metric that matters. Cost Per Lead (CPL) pays for a qualified inquiry — a form fill, a demo request — and fits service businesses where the sale itself happens off-platform, often through a sales team. Cost Per Install (CPI) pays for a verified app install or activation, built for mobile and SaaS products where the install is the meaningful first step toward retention.</p>
+<h2 id="matching-the-model-to-your-funnel">Matching the Model to Your Funnel</h2>
+<p>The right model depends on where your funnel actually converts. If a publisher''s traffic can drive a purchase directly, CPS keeps incentives aligned all the way to revenue. If your sales cycle involves a call or a demo, CPL lets you pay for the handoff point you can actually control. If your product lives in an app store, CPI is the only model that reflects the action that matters.</p>
+<p>Some advertisers run more than one model at once — CPL for top-of-funnel lead generation and CPS for a retargeted second touch, for example. There is no rule against mixing models as long as each publisher understands which one applies to their traffic.</p>
+<h2 id="common-mistakes-to-avoid">Common Mistakes to Avoid</h2>
+<p>The most common mistake is picking a model based on what competitors use rather than what your own funnel supports. The second is setting a commission rate without first mapping it against actual margin — a CPS rate that looks generous on paper can quietly erase margin on lower-ticket items. The third is switching models mid-campaign without re-testing publisher performance, since a publisher optimized for CPL traffic will not automatically perform the same way once the goalpost moves to CPS.</p>
+<p>Start with the funnel, not the format. The model should describe how your business already converts customers — not force a new definition of success onto publishers who are already sending you results.</p>',
+  '[{"anchor":"understanding-the-three-models","label":"Understanding the Three Models"},{"anchor":"matching-the-model-to-your-funnel","label":"Matching the Model to Your Funnel"},{"anchor":"common-mistakes-to-avoid","label":"Common Mistakes to Avoid"}]',
+  6,
+  'published',
+  NOW()
+),
+(
+  (SELECT id FROM blog_categories WHERE slug = 'playbooks'),
+  (SELECT id FROM authors WHERE slug = 'alex-rivera'),
+  '5 Signs Your Affiliate Tracking Has a Fraud Problem',
+  'signs-of-affiliate-fraud',
+  'Fraud rarely announces itself. These are the patterns that usually show up first — before the fraud shows up in your billing.',
+  NULL,
+  '<p>Affiliate fraud is easiest to catch before it is billed, which means the earliest signals usually show up in data patterns rather than in an obvious spike in complaints. Here are the five patterns worth checking first.</p>
+<h2 id="conversion-timing-looks-too-good">Conversion Timing Looks Too Good</h2>
+<p>A genuine customer journey — click, browse, decide, convert — takes time. Conversions that complete in a handful of seconds, especially at scale from a single source, are a strong signal of automated or scripted activity rather than a real buying decision.</p>
+<h2 id="traffic-spikes-from-a-single-source">Traffic Spikes From a Single Source</h2>
+<p>A sudden, disproportionate spike in clicks or conversions from one publisher — particularly one with no matching increase in ad spend or promotional activity to explain it — deserves a manual review before it gets billed, not after.</p>
+<h2 id="suspiciously-high-click-to-conversion-consistency">Suspiciously High Click-to-Conversion Consistency</h2>
+<p>Real traffic has noise: conversion rates vary by day, device, and audience segment. A publisher whose conversion rate stays implausibly consistent across every batch of traffic is more likely running a script than genuinely engaged users.</p>
+<p>None of these signals alone proves fraud — but together, they are exactly what a fraud detection layer should be screening for before a single click or conversion is ever billed to an advertiser.</p>',
+  '[{"anchor":"conversion-timing-looks-too-good","label":"Conversion Timing Looks Too Good"},{"anchor":"traffic-spikes-from-a-single-source","label":"Traffic Spikes From a Single Source"},{"anchor":"suspiciously-high-click-to-conversion-consistency","label":"Suspiciously High Click-to-Conversion Consistency"}]',
+  4,
+  'published',
+  NOW()
+),
+(
+  (SELECT id FROM blog_categories WHERE slug = 'network-updates'),
+  (SELECT id FROM authors WHERE slug = 'alex-rivera'),
+  'Techslay Publisher Network Now Covers 40+ Countries',
+  'network-expansion-40-countries',
+  'Our publisher network has expanded its geographic coverage, giving advertisers broader reach without adding a single new vendor relationship.',
+  NULL,
+  '<p>Advertisers running international campaigns have historically needed to manage multiple regional networks to get real coverage. That is no longer necessary on Techslay.</p>
+<h2 id="whats-new">What''s New</h2>
+<p>The publisher network now spans more than 40 countries across North America, Europe, and Asia-Pacific, with vetted publishers active in ecommerce, SaaS, and mobile app verticals in each region.</p>
+<h2 id="why-this-matters-for-advertisers">Why This Matters for Advertisers</h2>
+<p>Advertisers expanding into new markets can now launch campaigns against the same tracking infrastructure and account management relationship they already use — no new integration, no new vendor onboarding, and no loss of visibility into cross-market performance.</p>',
+  '[{"anchor":"whats-new","label":"What''s New"},{"anchor":"why-this-matters-for-advertisers","label":"Why This Matters for Advertisers"}]',
+  3,
+  'published',
+  NOW()
+);
+
+INSERT INTO blog_tags (name, slug) VALUES
+('CPS', 'cps'), ('CPL', 'cpl'), ('CPI', 'cpi'), ('Campaign Strategy', 'campaign-strategy'),
+('Fraud Detection', 'fraud-detection-tag'), ('Tracking', 'tracking'),
+('Network Updates', 'network-updates-tag'), ('Publishers', 'publishers-tag');
+
+INSERT INTO blog_post_tag (blog_post_id, blog_tag_id)
+SELECT p.id, t.id FROM blog_posts p, blog_tags t
+WHERE p.slug = 'choosing-cps-cpl-cpi' AND t.slug IN ('cps','cpl','cpi','campaign-strategy');
+
+INSERT INTO blog_post_tag (blog_post_id, blog_tag_id)
+SELECT p.id, t.id FROM blog_posts p, blog_tags t
+WHERE p.slug = 'signs-of-affiliate-fraud' AND t.slug IN ('fraud-detection-tag','tracking');
+
+INSERT INTO blog_post_tag (blog_post_id, blog_tag_id)
+SELECT p.id, t.id FROM blog_posts p, blog_tags t
+WHERE p.slug = 'network-expansion-40-countries' AND t.slug IN ('network-updates-tag','publishers-tag');
+
+INSERT INTO blog_related_posts (blog_post_id, related_post_id)
+SELECT a.id, b.id FROM blog_posts a, blog_posts b
+WHERE a.slug = 'choosing-cps-cpl-cpi' AND b.slug = 'signs-of-affiliate-fraud';
+
+INSERT INTO blog_related_posts (blog_post_id, related_post_id)
+SELECT a.id, b.id FROM blog_posts a, blog_posts b
+WHERE a.slug = 'signs-of-affiliate-fraud' AND b.slug = 'choosing-cps-cpl-cpi';
